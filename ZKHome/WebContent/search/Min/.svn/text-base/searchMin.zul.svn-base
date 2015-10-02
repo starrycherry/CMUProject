@@ -1,0 +1,46 @@
+<?page title="SEARCH" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native" xmlns:w='client'>
+	<zscript><![CDATA[String loginName = (String) Sessions.getCurrent().getAttribute("loginName");if(loginName == null || loginName.equals("")) {Executions.sendRedirect("../../welcome.zul");}]]></zscript>
+<zscript><![CDATA[
+    import searchUtil.PrefixTree;
+    
+    boolean flag = false;
+    PrefixTree tree = new PrefixTree();
+]]></zscript>
+<div style="margin:0 auto;width:auto;">
+	<hbox style="margin:0 auto;padding:5px" width="auto" >
+		<image id="voiceImg" src="/images/voice.png" />
+		<separator width="10px" />
+		Keyword:
+		<separator width="10px" />
+		<textbox id="keywordBox" width="250px">
+			<attribute name="onChanging"><![CDATA[
+			    String value = event.getValue();
+			    if(value.equals("")) {
+			    	cloud.setSrc("");
+			    	cloud.setVisible(false);
+			    	start.setVisible(true);
+					start.setSrc("tagCloud.html");
+			    } else {
+			    	List list = tree.vagueSearch(value);
+					Sessions.getCurrent().setAttribute("searchList", list);
+					cloud.setVisible(true);
+					start.setVisible(false);
+					start.setSrc("");
+					if(!flag) {
+						cloud.setSrc("tagCloud1.jsp");
+						flag = true;
+					} else {
+						cloud.setSrc("tagCloud2.jsp");
+						flag = false;
+					}
+			    }
+		    ]]></attribute>
+		</textbox>
+		<separator width="10px" />
+		<button mold="trendy" id="searchButton" label="Search" image="/images/search.png"/>
+	</hbox>
+	<iframe style="border: none" id="start" width="590px" height="260px" src="tagCloud.html" />
+	<include style="border: none" id="cloud" width="590px" height="260px" src="" visible="false"/>
+</div>
+</zk>

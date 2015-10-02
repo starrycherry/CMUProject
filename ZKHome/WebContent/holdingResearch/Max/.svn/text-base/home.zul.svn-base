@@ -1,0 +1,41 @@
+<zk>
+	<zscript><![CDATA[
+	void move(Component dragged) {
+		if (self instanceof Listitem) {
+			self.parent.insertBefore(dragged, self);
+		} else {
+			self.appendChild(dragged);
+		}
+	}
+	
+
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+	if(loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+
+
+]]></zscript>
+	<tabbox id="tb" height="auto"  style="min-width: 1000px">
+		<tabs id="tabs">
+			<tab id="holdingRe" label="Holdings Research" />
+			<tab id="clientRe" label="Client Research" />
+			<tab id="expert" label="Experts" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<include id="tp1"
+					src="/holdingResearch/Max/holdingResearch.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include id="tp2"
+					src="/holdingResearch/Max/clientResearch.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include id="tp3"
+					src="/holdingResearch/Max/experts.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</zk>

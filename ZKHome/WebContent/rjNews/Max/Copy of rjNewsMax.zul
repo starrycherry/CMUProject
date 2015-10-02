@@ -1,0 +1,165 @@
+<!-- <zk xmlns:x="xhtml" xmlns:zk="zk"> -->
+
+	<div id="rjNews" width="auto" height="auto"  hflex="1" 
+		 apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('action.RjNewsController')" style="min-width: 1000px; min-height:600px">
+		<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+		<!--<toolbar id="backButt" width="100px" height="15px"
+			visible="false" mold="panel">
+
+		 	<toolbarbutton label="Go Back" 
+				onClick='backButt.setVisible(false);miniWindow.setVisible(false);gb1.setVisible(true)'
+				width="100%" mold="toggle"/>
+		</toolbar>
+		 -->
+		 <button mold="trendy" visible="false" id="backButt" Style="float: right; clear: all;" Label="Go Back" onClick='backButt.setVisible(false);miniWindow.setVisible(false);gb1.setVisible(true)'></button>
+		 <attribute name="onClick"><![CDATA[
+		 
+		 ]]></attribute>
+	<!-- 	<groupbox id="gb1" height="100%" width="100%" style="overflow: auto;min-width: 500px"> -->
+		<!--  <vbox style="overflow: auto"> -->
+		<!-- <hlayout>	<button mold="trendy"  Style="float: right; clear: all;" Label="Settings" onClick="settings.setVisible(true);settings.doPopup()"></button></hlayout> -->
+			<grid id="gb1" model="@load(vm.evDat.dataFilt)" 
+				emptyMessage="Nothing in Inbox." height="100%" style="min-width: 500px" >
+
+				<columns>
+					<column width="15%" />
+					<column />
+				</columns>
+				<template name="model">
+					<row>
+						<!-- src="@load(each.imageUrl)" -->
+						<html>
+							<image id="dhsb"
+							
+							src="${each.imageUrl}"
+								height="64px" width="64px">
+							</image>
+							
+						</html>
+<!-- miniWindow.setSrc('@load(each.url)')  -->
+<!-- onClick='gb1.setVisible(false); miniWindow.setVisible(true);backButt.setVisible(true);' -->
+						<vbox >
+							<hlayout>
+							
+								<label
+									autag="@load(each.url)"
+									
+							  		
+									style="font-size:16px;text-decoration:underline;color:blue"
+									value="@load(each.title)"><attribute name="onClick">
+									<![CDATA[
+									         gb1.setVisible(false);
+									         miniWindow.setVisible(true);
+									         backButt.setVisible(true);
+									         String str=self.getAutag();
+									        str=str.replace("*","/");
+									        miniWindow.setSrc(str);
+									        System.out.println(str);
+									]]> </attribute>
+								</label>
+															<vbox>
+						<!-- 		<a id="temp" context="editPop" >Valuable for</a><attribute name="onCreate"><![CDATA[
+									
+									 								                                                                                   
+									int i=0;
+									String temp1="editPopup"+Integer.toString(i);
+								           temp.setContext(temp1);
+										   editPopup.setId(temp1);		
+											temp.setId(Integer.toString(i));
+											i++;
+									
+								              ]]></attribute>
+								<menupopup id="editPopup" >
+									
+											<menuitem label="colleagues"/><attribute name="onClick"><![CDATA[
+											Messagebox.show("Thanks for evaluating the news.");
+											]]></attribute>
+											<menuitem label="All" /><attribute name="onClick"><![CDATA[
+											Messagebox.show("Thanks for evaluating the news.");
+											]]></attribute>
+									
+								</menupopup> -->
+								<!-- <attribute name="onClick"><![CDATA[
+											Messagebox.show("Thanks for evaluating the news.");
+											]]></attribute> -->
+									
+								
+
+							</vbox>
+								<!-- <button label="we" onClick='@command("setUrl", ent=each)'  style="text-decoration:none;border:0"></button> -->
+								<!-- onClick='gb1.setVisible(false); miniWindow.setVisible(true);backButt.setVisible(true);miniWindow.setSrc("news_small.zul")' -->
+							</hlayout>
+							<hlayout>
+								<label style="font-size:10px" value="@load(each.content)">
+									
+								</label>
+							</hlayout>
+							<hlayout>
+							<vlayout>
+							<label style="font-size:10px" value="@load(each.subsType)">
+							</label>
+							<label style="font-size:10px;color:red" value="@load(each.focus)"/>
+							</vlayout>
+							</hlayout>
+						</vbox>
+					</row>
+				</template>
+			</grid>
+			<!-- -->
+							
+
+<!-- </vbox> -->
+		<!-- </groupbox> -->
+		<iframe id="miniWindow" width="100%" height="100%" style="min-width: 900px; min-height:550px"
+			visible="false" >
+		</iframe><attribute name="onCreate">
+		<![CDATA[
+		         
+		]]>
+		</attribute>
+
+	</div>
+<!-- <window id="settings" border="normal" width="350px" height="400px"
+		position="center,top" visible="false">
+		<caption label="Settings">
+			<toolbar width="20px">
+				<toolbarbutton image="/settings_Fotor.png"
+					onClick="settings.setVisible(false)" />
+			</toolbar>
+		</caption>
+		<toolbar mold="panel" width="100%">
+			for subscription
+						<tablelayout columns="1" width="100%">
+							<tablechildren>
+								<checkbox label="Technology"
+									checked="true" />
+							</tablechildren>
+							<tablechildren>
+								<checkbox label="Pharma" />
+							</tablechildren>
+							<tablechildren>
+								<checkbox label="Infrastructure" />
+							</tablechildren>
+							<tablechildren>
+								<checkbox label="Power" />
+							</tablechildren>
+							<tablechildren>
+								<checkbox label="Automobile" />
+							</tablechildren>
+						</tablelayout>
+					
+
+			
+
+		</toolbar>
+	</window>
+ -->
+<!-- </zk> -->

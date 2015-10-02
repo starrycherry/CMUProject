@@ -1,0 +1,67 @@
+<zk xmlns:x="xhtml" xmlns:zk="zk">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<window id="rjNews" title="RJ News" width="500px" height="400px"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('action.RjNewsController')">
+		<toolbar id="backButt" width="100px" height="15px"
+			visible="false">
+
+			<toolbarbutton label="Go Back"
+				onClick='backButt.setVisible(false);miniWindow.setVisible(false);gb1.setVisible(true);rjNews.setWidth("500px");rjNews.setHeight("400px")'
+				width="100%" />
+		</toolbar>
+
+		<groupbox id="gb1" height="100%" width="100%">
+			
+			<grid model="@load(vm.evDat.data)"
+				emptyMessage="Nothing in Inbox.">
+
+				<columns>
+					<column width="20%" />
+					<column />
+				</columns>
+				<template name="model">
+					<row>
+						<html>
+							<image
+								src="http://media-cdn.tripadvisor.com/media/photo-s/01/e0/82/9c/newa-chen.jpg"
+								height="64px" width="64px">
+							</image>
+						</html>
+
+						<vbox>
+							<hlayout>
+								<label
+									onClick='gb1.setVisible(false); miniWindow.setVisible(true);backButt.setVisible(true);rjNews.setWidth("100%");rjNews.setHeight("100%");miniWindow.setSrc("news_small.zul")'
+									style="font-size:16px;text-decoration:underline;color:blue"
+									value="@load(each.title)">
+
+
+								</label>
+							</hlayout>
+							<hlayout>
+								<label style="font-size:10px" value="@load(each.content)">
+									
+								</label>
+							</hlayout>
+						</vbox>
+					</row>
+				</template>
+			</grid>
+
+
+		</groupbox>
+		<iframe id="miniWindow" width="100%" height="100%"
+			visible="false" src="news_small.zul">
+		</iframe>
+
+	</window>
+
+</zk>

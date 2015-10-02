@@ -1,0 +1,48 @@
+<zk xmlns:n="native">
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.ClientComparator;
+	Comparator nameAsc = new ClientComparator(true, 1);
+	Comparator nameDsc = new ClientComparator(false, 1);
+	Comparator quantityAsc = new ClientComparator(true, 5);
+	Comparator quantityDsc = new ClientComparator(false, 5);
+	Comparator valueAsc = new ClientComparator(true, 6);
+	Comparator valueDsc = new ClientComparator(false, 6);
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+	<div align="left" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.FilterViewModelClient')">
+		<groupbox width="100%">
+			<caption label="Bank of America - BOA - 060505583" />
+			<groupbox mold="3d" width="100%">
+				<caption label="Client of Bank of America" />
+				<grid model="@load(vm.clientModel)">
+					<columns menupopup="auto">
+						<column label="Name" hflex="2"
+							sortAscending="${holdingAsc}" sortDescending="${holdingDsc}" />
+						<column label="Quantity" hflex="2"
+							sortAscending="${quantityAsc}" sortDescending="${quantityDsc}" />
+						<column label="value" hflex="2"
+							sortAscending="${valueAsc}" sortDescending="${valueDsc}" />
+					</columns>
+					<template name="model">
+						<row>
+							<a>
+								<label value="@load(each.name)" />
+							</a>
+							<label value="@load(each.quantity)" />
+							<label value="@load(each.value)" />
+						</row>
+					</template>
+					<foot>
+						<footer span="3" class="footer_right"
+							label="@load(vm.footer)" />
+					</foot>
+				</grid>
+			</groupbox>
+		</groupbox>
+	</div>
+</zk>

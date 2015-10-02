@@ -1,0 +1,24 @@
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<tabbox id="tb" height="280px" width="585px">
+		<tabs id="tabs">
+			<tab id="all" label="My Contacts" />
+			<tab id="favoriate" label="My Favorites" />
+		</tabs>
+		<tabpanels width="580px">
+			<tabpanel>
+				<include src="/contact/min/allContacts.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include src="/contact/min/favorites.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</zk>

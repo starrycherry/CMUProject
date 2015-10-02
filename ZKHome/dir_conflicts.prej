@@ -1,0 +1,16 @@
+Trying to add new property 'svn:ignore' with value '.settings
+
+build
+
+.project
+
+.classpath
+',
+but property already exists with value 'build
+
+.settings
+
+.classpath
+
+.project
+'.

@@ -1,0 +1,17 @@
+<?page title="twitter" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div align="center">
+		<html>
+			<a class="twitter-timeline"
+				href="https://twitter.com/starry_cherry/favorites"
+				data-widget-id="366056703499849729" width="800px">
+				Favorite Tweets by @starry_cherry
+			</a>
+			<script>
+				!function(d,s,id){var
+				js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+			</script>
+
+		</html>
+	</div>
+</zk>

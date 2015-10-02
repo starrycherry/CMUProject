@@ -1,0 +1,29 @@
+
+
+<div align="center">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<tabbox style="min-width: 400px; max-width:800px;">
+		<tabs>
+			<tab label="All Forms" />
+			<tab label="Submitted" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<include src="/forms/Max/formsAll.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include src="/forms/Max/formsSubmitted.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+
+</div>
+
+

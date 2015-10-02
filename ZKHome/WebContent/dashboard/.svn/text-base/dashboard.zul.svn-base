@@ -1,0 +1,359 @@
+<?page title="Welcome to Raymond James Financial Application!" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:w="client" xmlns:n="native">
+<style src="/css/style.css" />
+<style src="/css/Customize.css" />
+<label id="currentPage" value="0" visible="false"/>
+<zscript><![CDATA[
+import service.PageService;
+import service.UserService;
+import java.util.Map.Entry;
+import bean.Page;
+import bean.User;
+import org.zkoss.zk.ui.event.EventListener;
+import service.StockInfoService;
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+User user;
+List pageList;
+HashMap pageMap;
+HashMap map;
+PageService pageSer;
+UserService userSer;
+boolean stockFlag = false;
+boolean isOne = false;
+
+void addPage(Page p) {
+	A a = new A();
+	Label label = new Label();
+	label.setValue(p.getPageName());
+	
+	if(!isOne) {
+		board.setSrc(p.getUrl());
+   		currentPage.setValue(p.getPage_no() + "");
+   		label.setStyle("font-size: 15px; margin-right: 20px; color: #00C2ED");
+   		isOne = true;
+	} else {
+		label.setStyle("font-size: 15px; margin-right: 20px; color: white");
+	}
+	
+	a.addEventListener("onClick", new EventListener() {
+		public void onEvent(Event event) throws Exception {
+       		board.setSrc(p.getUrl());
+       		currentPage.setValue(p.getPage_no() + "");
+       		List components = pagination.getChildren();
+       		for(Object c : components) {
+       			if(c instanceof A) {
+       				List alist  = ((Component) c).getChildren();
+       				for(Object l : alist) {
+       					if(l instanceof Label) {
+       						Label tmp = (Label) l;
+       						tmp.setStyle("font-size: 15px; margin-right: 20px; color: white");
+       					}
+       				}
+       			}
+       		}
+       		label.setStyle("font-size: 15px; margin-right: 20px; color: #00C2ED");
+       	}
+	});		
+	a.addEventListener("onDoubleClick", new EventListener() {
+		public void onEvent(Event event) throws Exception {
+			Component panel = Path.getComponent("//page"+ currentPage.getValue() + "/main/preferencePanel");
+			if(panel != null) {
+				panel.setVisible(false);
+			}
+			newPagePanel.setVisible(false);
+			delPagePanel.setVisible(false);
+			renamePagePanel.setVisible(true);
+			Sessions.getCurrent().setAttribute("rename", p);
+			oldName.setValue(p.getPageName());
+       	}
+	});		
+	
+	a.appendChild(label);
+	pagination.appendChild(a);
+}
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../welcome.zul");
+} else {
+    pageSer = new PageService();
+    userSer = new UserService();
+    user = userSer.getUserByUsername(loginName);
+	pageList = pageSer.getPageList(user.getUser_id());
+	pageMap = new HashMap();
+	map = new HashMap();
+	map.put(1, "/dashboard/page1.zul");
+	map.put(2, "/dashboard/page2.zul");
+	map.put(3, "/dashboard/page3.zul");
+	map.put(4, "/dashboard/page4.zul");
+	map.put(5, "/dashboard/page5.zul");
+}
+]]></zscript>
+<div sclass="title">
+	<div sclass="logo">
+		<image src="/images/logo.png" />
+	</div>
+	<div sclass="loginConfig">
+		<image src="/images/logout.png" />
+		<a><label sclass="logout" value="log out">
+			<attribute name="onClick"><![CDATA[
+			   	Sessions.getCurrent().invalidate();
+			   	Executions.sendRedirect("../welcome.zul");
+       		]]></attribute>
+		</label></a>
+	</div>
+	<div style="float: right; margin-left: 2.4%; margin-right: -1%; margin-top: 3px">
+		<a><image src="/images/help.png" /></a>
+	</div>
+	<div id="preference" sclass="preference">
+		<a>
+			<attribute name="onClick"><![CDATA[
+			   	Component panel = Path.getComponent("//page"+ currentPage.getValue() + "/main/preferencePanel");
+			   	if(panel != null) {
+			   		panel.setVisible(true);
+			   	}
+       		]]></attribute>
+       		<image src="/images/preference.png" />
+		</a>
+	</div>
+	<div id="pageControl" sclass="pageControl">
+		<label id="flag" value="0" visible="false"/>
+		<a w:onClick="jq(this.$f('paging')).slideToggle(200);">
+			<attribute name="onClick"><![CDATA[
+			    if(flag.getValue().equals("0")) {
+			    	innerBorder.setSclass("innerBorder");
+			    	flag.setValue("1");
+			    } else {
+			    	innerBorder.setSclass("innerBorder2");
+			    	flag.setValue("0");
+			    }
+       		]]></attribute>
+       		<image src="/images/page.png" />
+		</a>
+	</div>
+	<zscript><![CDATA[
+		String[] keywords = {"BOA","JP Morgan","Facebook","Google","LinkedIn","Apple","Amazon","Microsoft",
+	    "Oracle","Zynga","Groupon","PNC"};
+	]]></zscript>
+	<div sclass="search">
+		<hlayout>
+		<label sclass="welcome" value="Welcome, ${fullname} !" />
+		<separator width="10px"></separator>
+	    <bandbox id="bd" mold="rounded" autodrop="true" width="200px">  
+	        <bandpopup>
+	            <listbox height="200px" width="300px" mold="paging" autopaging="true"
+	                onSelect="bd.value=self.selectedItem.label; bd.close();">
+	                <listhead>
+	                    <listheader label="Recommended keywords" />
+	                </listhead>
+	                <listitem label="${each}" forEach="${keywords}" />
+	            </listbox>
+	        </bandpopup>
+	    </bandbox>
+	    </hlayout>
+    </div>
+</div>
+<div sclass="paging" id="paging">
+	<div sclass="nav" id="pages">
+		<hlayout>
+			<div style="margin-top: 3px;">
+				<include id="stockBar" mode="defer" src="stock1.zul" />
+			</div>
+			<hlayout id="pagination">
+			</hlayout>
+			<a id="addPage" style="margin-right: 10px;">
+		        <attribute name="onClick"><![CDATA[
+					Component panel = Path.getComponent("//page"+ currentPage.getValue() + "/main/preferencePanel");
+					if(panel != null) {
+						panel.setVisible(false);
+					}
+					renamePagePanel.setVisible(false);
+					delPagePanel.setVisible(false);
+				    newPagePanel.setVisible(true);
+		       	]]></attribute>
+		        <image src="/images/addPage.png" />
+		   	</a>
+		   	<a id="delPage" style="margin-right: 30px;">
+		        <attribute name="onClick"><![CDATA[
+					Component panel = Path.getComponent("//page"+ currentPage.getValue() + "/main/preferencePanel");
+					if(panel != null) {
+						panel.setVisible(false);
+					}
+					renamePagePanel.setVisible(false);
+					newPagePanel.setVisible(false);
+				    delPagePanel.setVisible(true);
+		       	]]></attribute>
+		        <image src="/images/delPage.png" />
+		   	</a>
+        </hlayout>
+	</div>
+	<div sclass="nav" id="nopage">
+		<hlayout>
+			<label style="color: white; font-size: 16px;" value="Please add new page with the button on the right!" />
+			<a>
+		        <attribute name="onClick"><![CDATA[
+					Component panel = Path.getComponent("//page"+ currentPage.getValue() + "/main/preferencePanel");
+					if(panel != null) {
+						panel.setVisible(false);
+					}
+				    newPagePanel.setVisible(true);
+		       	]]></attribute>
+		        <image src="/images/addPage.png" />
+		   	</a>
+	   	</hlayout>
+	</div>
+</div>
+<div id="delPagePanel" sclass="configPanel" visible="false">
+	<hlayout>
+		<div hflex="8"><space/><space/><n:b>Delete Page</n:b></div>
+		<div hflex="1"><a onClick="delPagePanel.setVisible(false)" >X</a></div>
+	</hlayout>
+	<radiogroup>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number1.png" />
+				<space spacing="10px" />
+				<listbox id="pageBox" mold="select" width="140px;" style="margin-top: 6px;"/><attribute name="onCreate"><![CDATA[
+				      pageBox.setModel(new ListModelList(pageMap.keySet()));
+				]]></attribute>
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number2.png" />
+				<space spacing="50px" />
+				<button mold="trendy" id="delPagebtn" label="Delete" dir="reverse" image="/images/delete.png" style="margin-top: 6px;">
+					<attribute name="onClick"><![CDATA[
+					    Listitem c = pageBox.getSelectedItem();
+					    if(c == null) {
+					    	delPageError.setValue("Oops! Please select one page.");
+					    } else {
+					    	Page p = (Page) pageMap.get(c.getValue().toString());
+						   	pageSer.delExistingPage(p);
+						   	map.put(p.getPage_no(), p.getUrl());
+						   	Executions.sendRedirect("/dashboard/dashboard.zul");
+					    }
+		       		]]></attribute>
+				</button>
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<label id="delPageError" style="color: red;" value="" />
+		</div>
+	</radiogroup>
+</div>
+<div id="newPagePanel" sclass="configPanel" visible="false">
+	<hlayout>
+		<div style="margin-right: 30px"><space/><space/><n:b>Add New Page (At Most 5 Pages)</n:b></div>
+		<div><a onClick="newPagePanel.setVisible(false)" >X</a></div>
+	</hlayout>
+	<radiogroup>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number1.png" />
+				<space spacing="20px" />
+				<textbox id="newPage" />
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number2.png" />
+				<space spacing="50px" />
+				<button mold="trendy" id="newPagebtn" label="Add" dir="reverse" image="/images/plus.png" style="margin-top: 6px;">
+					<attribute name="onClick"><![CDATA[
+					    String newPageName = newPage.getValue();
+					    if(pageMap.containsKey(newPageName) || newPageName.equals("")) {
+					    	newPageError.setValue("Oops! Invalid page name. Please try another name.");
+					    } else {
+							if(newPageName.length() > 10) {
+								newPageError.setValue("Oops! Page name is too long. (Less than 10 letters)");
+							} else {
+							   	Entry e = (Entry) map.entrySet().iterator().next();
+							   	Page page = new Page(user, 
+							   			(Integer) e.getKey(), newPageName, (String) e.getValue());
+							   	pageSer.addNewPage(page);
+							   	map.remove(e.getKey());
+							   	Executions.sendRedirect("/dashboard/dashboard.zul");
+							}
+					    }
+		       		]]></attribute>
+				</button>
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<label id="newPageError" style="color: red;" value="" />
+		</div>
+	</radiogroup>
+</div>
+<div id="renamePagePanel" sclass="configPanel" visible="false">
+	<hlayout>
+		<div hflex="8"><space/><space/><n:b>Rename Page</n:b></div>
+		<div hflex="1"><a onClick="renamePagePanel.setVisible(false)" >X</a></div>
+	</hlayout>
+	<radiogroup>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number1.png" />
+				<space spacing="20px" />
+				<div style="margin-top: 7px;">
+					<label value="Old Name: "/><label id="oldName" value="" />
+				</div>
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number2.png" />
+				<space spacing="20px" />
+				<textbox id="renamePage" />
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<hlayout>
+				<image src="/images/number3.png" />
+				<space spacing="50px" />
+				<button mold="trendy" id="renamePagebtn" label="Rename" dir="reverse" image="/images/rename.png" style="margin-top: 6px;">
+					<attribute name="onClick"><![CDATA[
+					    String renamePageName = renamePage.getValue();
+					    Page p = (Page) Sessions.getCurrent().getAttribute("rename");
+					    pageMap.remove(p.getPageName());
+					    if(pageMap.containsKey(renamePageName) || renamePageName.equals("")) {
+					    	newPageError.setValue("Oops! Invalid page name. Please try another name.");
+					    } else {
+						   	pageSer.renameExistingPage(p, renamePageName);
+						   	pageMap.put(renamePageName, p);
+						   	Executions.sendRedirect("/dashboard/dashboard.zul");
+					    }
+		       		]]></attribute>
+				</button>
+			</hlayout>
+		</div>
+		<div sclass="steps">
+			<label id="renamePageError" style="color: red;" value="" />
+		</div>
+	</radiogroup>
+</div>
+<div sclass="innerBorder2" id="innerBorder">
+	<include id="board" mode="defer" src="" />
+</div>
+<zscript><![CDATA[
+if(loginName != null && !loginName.equals("")) {
+	if(pageList.size() == 0) {
+		nopage.setVisible(true);
+		pages.setVisible(false);
+		newPagePanel.setVisible(true);
+	} else {
+		for(Object o : pageList) {
+			Page p = (Page) o;
+			pageMap.put(p.getPageName(), p);
+			addPage(p);
+			map.remove(p.getPage_no());
+		}
+		if(pagination.getChildren().size() == 5) {
+			addPage.setVisible(false);
+		}
+		nopage.setVisible(false);
+		pages.setVisible(true);
+	}
+}
+]]></zscript>
+</zk>

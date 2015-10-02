@@ -1,0 +1,36 @@
+<zk>
+	<zscript>
+	import view_model.StockQuotesWindow;
+	import view_model.StockGridRowRenderer;
+	import service.StockQuoteUpdateService;
+	if (!desktop.isServerPushEnabled()) {
+		desktop.enableServerPush(true);
+	}
+	StockQuoteUpdateService service = StockQuoteUpdateService.lookup();
+	ListModel model = service.getProxy(desktop);
+	StockGridRowRenderer renderer = new StockGridRowRenderer();
+</zscript>
+	<div align="center">
+		<separator />
+		<separator />
+		
+			<hbox align="start">
+				Stock:
+				<textbox id="stock" value="" />
+				<button id="addbtn" label="Add"
+					onClick="service.addStock(stock.value)" />
+			</hbox>
+		<separator />
+		<groupbox width="410px">
+			<caption label="Live Stock Quotes"/>
+			<grid model="${model}" rowRenderer="${renderer}"
+				style="min-width:410px" height="200px">
+				<columns>
+					<column label="Symbol" width="130px" />
+					<column label="Price" width="130px" />
+					<column label="Change" width="130px" />
+				</columns>
+			</grid>
+		</groupbox>
+	</div>
+</zk>

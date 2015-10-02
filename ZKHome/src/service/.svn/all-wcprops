@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/260/ZKHome/src/service
+END
+YahooStockQuoteService.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/259/ZKHome/src/service/YahooStockQuoteService.java
+END
+UserService.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/241/ZKHome/src/service/UserService.java
+END
+UserPortalColumnService.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/ZKHome/src/service/UserPortalColumnService.java
+END
+PageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/142/ZKHome/src/service/PageService.java
+END
+StockQuoteUpdateService.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/260/ZKHome/src/service/StockQuoteUpdateService.java
+END
+StockInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/167/ZKHome/src/service/StockInfoService.java
+END

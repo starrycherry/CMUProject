@@ -1,0 +1,26 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<div align="center">
+		<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+
+		<groupbox width="100%" mold="3d">
+			<caption label="Professionally Speaking" />
+			<vbox>
+				<div>
+					<include src="/holdingResearch/Max/commentary.zul" />
+				</div>
+				<div>
+					<include src="/holdingResearch/Max/commentary.zul" />
+				</div>
+				<div>
+					<include src="/holdingResearch/Max/commentary.zul" />
+				</div>
+			</vbox>
+		</groupbox>
+	</div>
+</zk>

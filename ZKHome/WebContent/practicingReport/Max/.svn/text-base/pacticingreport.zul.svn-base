@@ -1,0 +1,28 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+		<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+<div align="center">
+<tabbox style="min-width: 500px;max-width: 800px;">
+		<tabs>
+			<tab label="Reports" />
+			<tab label="Clients" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<include src="/practicingReport/Max/report.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include src="/practicingReport/Max/client.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</div>
+</zk>
+

@@ -1,0 +1,20 @@
+<zk xmlns:n="native">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../welcome.zul");
+}
+]]></zscript>
+	<n:marquee width="1100px" behavior="scroll" scrollamount="2" direction="left">
+		<span style="color: white;" forEach="${stocks}">
+			<label value="${each.symbol}" /> (
+			Price: <label value="${each.price}" />, 
+			Open: <label value="${each.open}" />,
+			High: <label value="${each.high}" />,
+			Low: <label value="${each.low}" />,
+			52w Range: <label value="${each.range}" />), 
+		</span>
+	</n:marquee>
+</zk>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/211/ZKHome/src/comparators
+END
+ClientRankComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/211/ZKHome/src/comparators/ClientRankComparator.java
+END
+ReportComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3/ZKHome/src/comparators/ReportComparator.java
+END
+CashComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/3/ZKHome/src/comparators/CashComparator.java
+END
+HoldingComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3/ZKHome/src/comparators/HoldingComparator.java
+END
+FormsComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/139/ZKHome/src/comparators/FormsComparator.java
+END
+FixedIncomeComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/119/ZKHome/src/comparators/FixedIncomeComparator.java
+END
+FormsSubmittedComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/139/ZKHome/src/comparators/FormsSubmittedComparator.java
+END
+ClientComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3/ZKHome/src/comparators/ClientComparator.java
+END

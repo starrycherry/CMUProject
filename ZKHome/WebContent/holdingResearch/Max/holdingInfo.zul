@@ -1,0 +1,46 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+
+	<grid  style="min-width: 1000px">
+		<auxhead sclass="category-center">
+			<auxheader colspan="8" label="Snapshot for Bank of America" />
+		</auxhead>
+		<columns>
+			<column label="Prev. Close" align="right"/>
+			<column label="Open" align="right"/>
+			<column label="Day's Range" align="right"/>
+			<column label="Volume" align="right"/>
+			<column label="Market Cap" align="right"/>
+			<column label="52wk Range" align="right"/>
+			<column label="P/E" align="right"/>
+			<column label="Beta" align="right"/>
+		</columns>
+		<rows>
+			<row>
+				<label value="13.78" />
+				<label value="13.93" />
+				<label value="13.76-13.94" />
+				<label value="90,767,808" />
+				<label value="149.63B" />
+				<label value="6.90-13.99" />
+				<label value="43.38" />
+				<label value="1.92" />
+			</row>
+		</rows>
+	</grid>
+	<h:br />
+	<div align="center">
+		<vlayout apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('chartUtil.StockChart')">
+			<chart id="chart" title="Stock Chart for BAC" width="520"
+				height="350" paneColor="#FFFFFF" type="line" yAxis="Amount"
+				model="@bind(vm.model)" engine="@bind(vm.engine)" />
+		</vlayout>
+	</div>
+</zk>

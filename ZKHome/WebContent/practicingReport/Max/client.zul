@@ -1,0 +1,59 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+		<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.ClientRankComparator;
+	;
+	Comparator nameAsc = new ClientRankComparator(true, 1);
+	Comparator nameDsc = new ClientRankComparator(false, 1);
+	Comparator assetsAsc = new ClientRankComparator(true, 2);
+	Comparator assetsDsc = new ClientRankComparator(false, 2);
+	Comparator priorityAsc = new ClientRankComparator(true, 3);
+	Comparator priorityDsc = new ClientRankComparator(false, 3);
+	Comparator attitudeAsc = new ClientRankComparator(true, 4);
+	Comparator attitudeDsc = new ClientRankComparator(false, 4);
+	Comparator referrerAsc = new ClientRankComparator(true, 5);
+	Comparator referrerDsc = new ClientRankComparator(false, 5);
+]]></zscript>
+
+
+	<grid vflex="1" style="min-width: 500px;" height="500px"
+		apply="action.ClientController">
+		<columns menupopup="auto">
+			<column label="Name" sort="auto" sortAscending="${nameAsc}" style="min-width: 150px" align="left"
+				sortDescending="${nameDsc}" />
+			<column label="Priority" sort="auto" style="min-width: 100px" align="left"
+				sortAscending="${priorityAsc}" sortDescending="${priorityDsc}" />
+			<column label="Attitude" sort="auto" style="min-width: 100px" align="left"
+				sortAscending="${attitudeAsc}" sortDescending="${attitudeDsc}" />
+			<column label="Referrer" sort="auto" style="min-width: 150px" align="left"
+				sortAscending="${referrerAsc}" sortDescending="${referrerDsc}" />
+							<column label="Assets" sort="auto" style="min-width: 100px" align="right"
+				sortAscending="${assetsAsc}" sortDescending="${assetsDsc}" />
+		</columns>
+
+
+		<template name="model">
+			<row>
+				<a
+					onClick='Filedownload.save("/images/Practicing Report Sample.pdf", null);'>
+					<label value="${each.name}"></label>
+				</a>
+				<label value="${each.priority}"></label>
+				<label value="${each.attitude}"></label>
+				<label value="${each.referrer}"></label>
+				<label value="${each.assets}"></label>
+			</row>
+		</template>
+
+	</grid>
+</zk>
+

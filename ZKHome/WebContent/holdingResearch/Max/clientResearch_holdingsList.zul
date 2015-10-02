@@ -1,0 +1,44 @@
+<zk xmlns:n="native">
+<zscript><![CDATA[
+    import java.util.Comparator;
+    import comparators.HoldingComparator;
+    Comparator nameAsc = new HoldingComparator(true, 1);
+    Comparator nameDsc = new HoldingComparator(false, 1);
+    Comparator quantityAsc = new HoldingComparator(true, 6);
+    Comparator quantityDsc = new HoldingComparator(false, 6);
+    Comparator valueAsc = new HoldingComparator(true, 7);
+    Comparator valueDsc = new HoldingComparator(false, 7);
+
+    String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+    if(loginName == null || loginName.equals("")) {
+    	Executions.sendRedirect("../../welcome.zul");
+    }
+
+]]></zscript>
+<div align="left" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('view_model.FilterViewModelHolding')">
+<groupbox width="100%">
+	<caption label="Machael"/>                        
+    <groupbox mold="3d" width="100%">
+        <caption label="Holdings of Machael" />
+         	<grid model="@load(vm.holdingModel)"  style="min-width: 1000px">
+				<columns menupopup="auto">
+		            <column label="Name" hflex="2" sortAscending="${holdingAsc}" sortDescending="${holdingDsc}" />
+		            <column label="Quantity" hflex="2" sortAscending="${quantityAsc}" sortDescending="${quantityDsc}" align="right"/>
+		            <column label="value($)" hflex="2" sortAscending="${valueAsc}" sortDescending="${valueDsc}" align="right"/>
+		        </columns>
+		        <template name="model">
+		            <row>
+		                <a><label value="@load(each.holding)" /></a>
+		                <label value="@load(each.quantity)" />
+		                <label value="@load(each.value)" />
+		            </row>
+		        </template>
+		        <foot>
+		            <footer span="3" class="footer_right" label="@load(vm.footer)" />
+		        </foot>
+ 			</grid>
+    </groupbox>
+</groupbox>
+</div>
+</zk>

@@ -1,0 +1,50 @@
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<div id="rjNews" width="100%" height="400px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.MarketNewsViewModel')">
+
+		<grid model="@load(vm.evDat.data)"
+			emptyMessage="Nothing in Inbox." height="250px" style="min-width: 500px">
+
+			<columns>
+				<column width="20%" />
+				<column />
+			</columns>
+			<template name="model">
+				<row style="background-color:white">
+
+					<image src="@load(each.image)" height="64px"
+						width="64px">
+					</image>
+
+
+					<vbox>
+						<hlayout>
+							<!-- <a
+								onClick='marketNews1.src="/marketNews/Min/newsDetail.zul";Calendar.setWidth("100%")'> -->
+							<a
+								onClick='marketNews1.src="/marketNews/Min/newsDetail.zul"'>
+								<label
+									style="font-size:16px;font-weight:bold"
+									value="@load(each.title)" />
+							</a>
+						</hlayout>
+						<hlayout>
+							<label value="@load(each.content)" />
+						</hlayout>
+					</vbox>
+				</row>
+			</template>
+		</grid>
+
+	</div>
+
+</zk>

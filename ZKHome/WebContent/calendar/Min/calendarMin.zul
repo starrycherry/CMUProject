@@ -1,0 +1,66 @@
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<style dynamic="true">
+		.z-toolbar-end { 	float: right; clear: none; }
+
+	</style>
+	<window id="calendarBase" border="none" width="100%" height="100%"
+		apply="action.CalController" style="min-width: 500px;">
+
+	<!-- 	<toolbar width="100%" style="float:right clear:none" mold="default">
+			mold="panel"
+			
+		</toolbar> -->
+
+		Upcoming
+		Events:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+		<checkbox id="personalChk" label="Personal" checked="true" />
+		<checkbox id="teamChk" label="Team" checked="true" />
+		<checkbox id="clientChk" label="Client" checked="true" />
+		<checkbox id="corporateChk" label="Corporate" checked="true" />
+		&#160;
+<datebox style=".z-toolbar-end" id="datePk" cols="12"
+				format="MM/dd/yyyy" onCreate="self.value = new Date()" mold="rounded" />
+		<listbox id="calList" emptyMessage="no entry for this date" style="min-width: 500px;min-height: 500px">
+			<listhead>
+				<listheader width="20%">Time</listheader>
+				<listheader>Details</listheader>
+				<listheader>Calendar</listheader>
+			</listhead>
+
+			<template name="model">
+				<listitem>
+					<listcell label="${each.timeS} to ${each.timeEndS}">
+<!-- 						onClick='details.setVisible(true);details.setTitle("asd");details.doPopup();whLabel.setValue("${each.comments}")' -->
+					</listcell>
+					<listcell label="${each.comments}"></listcell>
+					<listcell label="${each.kind}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<label id="whLabel"></label>
+		<!-- apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('Controller()')" -->
+
+
+
+	</window>
+	<window id="details" visible="false" border="normal" height="400px"
+		width="400px" position="center,top">
+		<label id="detailsAs"></label>
+
+
+
+
+
+	</window>
+
+	<zscript><![CDATA[]]></zscript>
+</zk>

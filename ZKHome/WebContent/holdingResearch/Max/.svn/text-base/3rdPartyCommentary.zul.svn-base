@@ -1,0 +1,90 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<div align="center">
+		<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+
+
+		<groupbox width="1000px" height="auto" mold="3d"
+			sclass="commentary" >
+			<caption label="Thirty Party Commentary" />
+			<grid  style="min-width: 1000px">
+				<columns>
+					<column>Commentary</column>
+					<column>Source</column>
+					<column>Time</column>
+				</columns>
+				<rows>
+					<row>
+						<div align="left">
+							<a>General Electric Starts Its First Wind Energy Plant in Estonia</a>
+							<h:ul>
+								<h:li>Financial Times</h:li>
+								<h:li>
+									Financials buoy US stock markets
+								</h:li>
+								<h:li>
+									Emerged from the US financial crisis
+								</h:li>
+							</h:ul>
+						</div>
+						<div>Raymond James</div>
+						<div>4 days ago</div>
+					</row>
+					<row>
+						<div align="left">
+							<a>JPMorgan to Pay $23 Million to Settle Suit Over Lehman Notes</a>
+							<h:ul>
+								<h:li>Financial Times</h:li>
+								<h:li>
+									Financials buoy US stock markets
+								</h:li>
+								<h:li>
+									Emerged from the US financial crisis
+								</h:li>
+							</h:ul>
+						</div>
+						<div>Bloomberg</div>
+						<div>4 days ago</div>
+					</row>
+					<row>
+						<div align="left">
+							<a>Dow Jones industrial average falls 200 points on discouraging news from blue-chip companies</a>
+							<h:ul>
+								<h:li>Financial Times</h:li>
+								<h:li>
+									Financials buoy US stock markets
+								</h:li>
+								<h:li>
+									Emerged from the US financial crisis
+								</h:li>
+							</h:ul>
+						</div>
+						<div>Bloomberg</div>
+						<div>4 days ago</div>
+					</row>
+					<row>
+						<div align="left">
+							<a>US government sues Bank of America</a>
+							<h:ul>
+								<h:li>Financial Times</h:li>
+								<h:li>
+									Financials buoy US stock markets
+								</h:li>
+								<h:li>
+									Emerged from the US financial crisis
+								</h:li>
+							</h:ul>
+						</div>
+						<div>Bloomberg</div>
+						<div>4 days ago</div>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</div>
+</zk>

@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<div align="center">
+		<html>
+			 <iframe width="320" height="260"
+				src="http://web2.0calc.com/widgets/minimal/" scrolling="no"
+				style="border: 1px solid #silver; ">
+				</iframe>
+				<br />
+		</html>
+	</div>
+</zk>

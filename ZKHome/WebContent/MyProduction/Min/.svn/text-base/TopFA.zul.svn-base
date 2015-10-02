@@ -1,0 +1,50 @@
+<?page title="Top FA" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<style src="/widgets/grid/master_detail/style.css" />
+	<div>
+		<radiogroup id="sv1" />
+		<combobox value="Top Production" autodrop="true" width="150px"
+			mold="rounded" readonly="true">
+			<comboitem id="topProd" label="Top Production" />
+			<comboitem id="assetAmt" label="Asset Amount" />
+		</combobox>
+
+		<radio id="daily" label="Daily" radiogroup="sv1" />
+		<radio id="monthly" label="Monthly" radiogroup="sv1" />
+		<radio id="yearly" label="Yearly" radiogroup="sv1"
+			selected="true" />
+
+		<separator spacing="5px" />
+	</div>
+
+	<separator spacing="5px" />
+	<grid oddRowSclass="myodd">
+		<columns>
+			<column width="20px" />
+			<column width="140px" label="FA Name" sort="auto" />
+			<column width="200px" label="Category" sort="auto" />
+			<column label="Value" sort="auto" />
+		</columns>
+		<rows>
+			<row>
+				<label />
+				<label value="Prateek" />
+				<label value="Production" />
+				<label value="$292,000.00" />
+			</row>
+			<row>
+				<label />
+				<label value="Michael" />
+				<label value="Production" />
+				<label value="$202,000.00" />
+			</row>
+		</rows>
+	</grid>
+</zk>

@@ -1,0 +1,85 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.FormsSubmittedComparator;
+	Comparator nameAsc = new FormsSubmittedComparator(true, 2);
+	Comparator nameDsc = new FormsSubmittedComparator(false, 2);
+	Comparator numberAsc = new FormsSubmittedComparator(true, 1);
+	Comparator numberDsc = new FormsSubmittedComparator(false, 1);
+	Comparator accountAsc = new FormsSubmittedComparator(true, 3);
+	Comparator accountDsc = new FormsSubmittedComparator(false, 3);
+	Comparator submittedAsc = new FormsSubmittedComparator(true, 4);
+	Comparator submittedDsc = new FormsSubmittedComparator(false, 4);
+	String[] account = { "34565434", "45346575", "12323232" };
+]]></zscript>
+	<grid vflex="1" style="min-width:330px;" height="200px"
+		apply="action.FormsSubmittedController">
+		<auxhead sclass="category-center">
+			<auxheader colspan="5" rowspan="1">
+				<hlayout>
+					<radiogroup id="categorySelector">
+						<radio label="Rejected" checked="true" />
+						<radio label="In Process" />
+						<radio label="Complete" />
+					</radiogroup>
+					&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+					<bandbox id="bd" mold="default" autodrop="true"
+						buttonVisible="true">
+						<bandpopup>
+							<listbox width="270px"
+								onSelect="bd.value=self.selectedItem.label; bd.close();">
+								<listhead>
+									<listheader label="search forms" />
+								</listhead>
+								<listitem label="${each}"
+									forEach="${account}" />
+							</listbox>
+						</bandpopup>
+					</bandbox>
+
+				</hlayout>
+			</auxheader>
+		</auxhead>
+
+		<columns menupopup="auto">
+			<column label="Number" sort="auto" style="min-width:50px;" width="15%"
+				sortAscending="${numberAsc}" sortDescending="${numberDsc}" />
+			<column label="Name" sort="auto" style="min-width:200px;"
+				sortAscending="${nameAsc}" sortDescending="${nameDsc}" />
+			<column label="Account" sort="auto" style="min-width:50px;"
+				sortAscending="${accountAsc}" sortDescending="${accountDsc}" />
+			<column label="Submitted" sort="auto"
+				style="min-width:50px;" sortAscending="${submittedAsc}"
+				sortDescending="${submittedDsc}" />
+		</columns>
+
+
+		<template name="model">
+			<row>
+				<label value="${each.number}"></label>
+				<a
+					onClick='Filedownload.save("/images/Forms Sample.pdf", null);'>
+					<label value="${each.name}"></label>
+				</a>
+				<label value="${each.account}"></label>
+				<label value="${each.submitted}"></label>
+
+			</row>
+		</template>
+
+	</grid>
+
+</zk>
+
+
+

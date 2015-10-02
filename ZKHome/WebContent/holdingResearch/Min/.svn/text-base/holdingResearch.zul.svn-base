@@ -1,0 +1,195 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+	import bean.Holding;
+	import java.util.List;
+	import java.util.ArrayList;
+	import view_model.FilterViewModelHolding;
+	import java.util.Comparator;
+	import comparators.HoldingComparator;
+	import dao.HoldingResearchUserRecordDao;
+	import dao.UserDao;
+	import bean.HoldingResearchUserRecord;
+	import bean.User;
+	Comparator holdingAsc = new HoldingComparator(true, 1);
+	Comparator holdingDsc = new HoldingComparator(false, 1);
+	Comparator typeAsc = new HoldingComparator(true, 2);
+	Comparator typeDsc = new HoldingComparator(false, 2);
+	Comparator researchAsc = new HoldingComparator(true, 3);
+	Comparator researchDsc = new HoldingComparator(false, 3);
+	Comparator clientAsc = new HoldingComparator(true, 4);
+	Comparator clientDsc = new HoldingComparator(false, 4);
+	Comparator dateAsc = new HoldingComparator(true, 5);
+	Comparator dateDsc = new HoldingComparator(false, 5);
+	HoldingResearchUserRecordDao rjUserRecordDao = new HoldingResearchUserRecordDao();
+	UserDao userDao = new UserDao();
+	User user = userDao.findUserByUsername((String) (Sessions.getCurrent()
+			.getAttribute("loginName")));
+	if (user == null) {
+		return;
+	}
+	HoldingResearchUserRecord hrUserRecord = rjUserRecordDao
+			.findUserRecordByUser(user.getUser_id());
+	void doHoldingMenu() {
+		hrUserRecord.setHoldings(holdingMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doResearchMenu() {
+		hrUserRecord.setHresearch(researchMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doTypeMenu() {
+		hrUserRecord.setHtype(typeMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doClientMenu() {
+		hrUserRecord.setHclients(clientMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doDateMenu() {
+		hrUserRecord.setHdate(dateMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.FilterViewModelHolding')">
+		<borderlayout height="250px">
+			<west title="Filters" size="160px" flex="true"
+				id="minHBorder" collapsible="true" open="@load(vm.minHBorder)"
+				onOpen="@command('doMinHBorder')">
+				<vbox>
+					<groupbox width="180px" mold="3d"
+						open="@load(vm.minHClientBox)" id="minHClientBox"
+						onOpen="@command('doMinHClientBox')">
+						<caption label="Held by Clients?" />
+						<checkbox id="heldClient"
+							label="Held by Clients?" checked="@load(vm.heldByClients)"
+							onCheck="@command('doHeldClient')" />
+					</groupbox>
+					<groupbox width="180px" mold="3d"
+						open="@load(vm.minHChangeBox)" id="minHChangeBox"
+						onOpen="@command('doMinHChangeBox')">
+						<caption label="Filter By Changes" />
+						<vbox>
+							<checkbox id="up" label="up"
+								checked="@load(vm.up)" onCheck="@command('doUp')" />
+							<checkbox id="down" label="down"
+								checked="@load(vm.down)" onCheck="@command('doDown')" />
+							<checkbox id="neutral" label="neutral"
+								checked="@load(vm.neutral)" onCheck="@command('doNeutral')" />
+							<button label="Update"
+								onClick="@command('checkChangeFilters')" />
+						</vbox>
+					</groupbox>
+					<groupbox width="180px" mold="3d"
+						open="@load(vm.minHProductionBox)" id="minHProductionBox"
+						onOpen="@command('doMinHProductionBox')">
+						<caption label="Filter By Productions" />
+						<vbox>
+							<checkbox id="equities" label="Equities"
+								checked="@load(vm.equities)" onCheck="@command('doEquities')" />
+							<checkbox id="mutualFund"
+								label="Mutual Funds" checked="@load(vm.mutral)"
+								onCheck="@command('doMutual')" />
+							<checkbox id="fixedIncome"
+								label="Fixed Income" checked="@load(vm.fixed)"
+								onCheck="@command('doFixedIncome')" />
+							<checkbox id="closedEnd"
+								label="Closed-End Funds" checked="@load(vm.closed)"
+								onCheck="@command('doClosedEnd')" />
+							<checkbox id="uit" label="UITs"
+								checked="@load(vm.uit)" onCheck="@command('doUit')" />
+							<button label="Update"
+								onClick="@command('checkFilters')" />
+						</vbox>
+					</groupbox>
+				</vbox>
+			</west>
+			<center>
+				<div>
+					<menupopup id="editPopup">
+						<menuitem label="Sort Ascending"
+							image="~./zul/img/grid/menu-arrowup.png" />
+						<menuitem label="Sort Descending"
+							image="~./zul/img/grid/menu-arrowdown.png" />
+						<menuitem label="Holdings" checkmark="true"
+							id="holdingMenu" autocheck="true" checked="@load(vm.holdings)"
+							onCheck="doCheck();doHoldingMenu()" />
+						<menuitem label="Research" checkmark="true"
+							id="researchMenu" autocheck="true" checked="@load(vm.hresearch)"
+							onCheck="doCheck();doResearchMenu()" />
+						<menuitem label="Type" checkmark="true"
+							id="typeMenu" autocheck="true" checked="@load(vm.htype)"
+							onCheck="doCheck();doTypeMenu()" />
+						<menuitem label="Clients" checkmark="true"
+							id="clientMenu" autocheck="true" checked="@load(vm.hclients)"
+							onCheck="doCheck();doClientMenu()" />
+						<menuitem label="Dates" checkmark="true"
+							id="dateMenu" autocheck="true" checked="@load(vm.hdate)"
+							onCheck="doCheck();doDateMenu()" />
+					</menupopup>
+					<zscript><![CDATA[
+	void doCheck() {
+		holdingColumn.setVisible(holdingMenu.isChecked());
+		imageColumn.setVisible(researchMenu.isChecked());
+		researchColumn.setVisible(researchMenu.isChecked());
+		typeColumn.setVisible(typeMenu.isChecked());
+		clientColumn.setVisible(clientMenu.isChecked());
+		dateColumn.setVisible(dateMenu.isChecked());
+
+	}
+]]></zscript>
+					<grid model="@load(vm.holdingModel)" height="250px"
+						id="holdingList" style="min-width: 500px">
+						<auxhead sclass="category-center">
+							<auxheader label="RJ Holdings" colspan="6"
+								align="center" />
+						</auxhead>
+						<columns >
+							<column label="Holdings" hflex="2"
+								id="holdingColumn" sortAscending="${holdingAsc}"
+								sortDescending="${holdingDsc}" visible="@load(vm.holdings)" />
+							<column width="7%" id="imageColumn"
+								visible="@load(vm.hresearch)">
+							</column>
+							<column label="Research" hflex="3"
+								id="researchColumn" sortAscending="${researchAsc}"
+								sortDescending="${researchDsc}" visible="@load(vm.hresearch)" />
+							<column label="Type" hflex="2"
+								id="typeColumn" sortAscending="${typeAsc}"
+								sortDescending="${typeDsc}" visible="@load(vm.htype)" />
+							<!-- <column label="Clients" width="10%"
+								id="clientColumn" sortAscending="${clientAsc}"
+								sortDescending="${clientDsc}" visible="@load(vm.hclients)" align="right"/> -->
+							<column label="Date" hflex="2"
+								id="dateColumn" sortAscending="${dateAsc}"
+								sortDescending="${dateDsc}" visible="@load(vm.hdate)" />
+							<!--  <column label="Change" hflex="2" /> -->
+						</columns>
+						<template name="model">
+							<row>
+								<label value="@load(each.holding)" />
+								<image src="@load(each.image)"
+									height="16px" width="16px" />
+								<label value="@load(each.research)" />
+								<label value="@load(each.type)" />
+								<!-- <label value="@load(each.clients)" /> -->
+								<label value="@load(each.date)" />
+
+
+							</row>
+						</template>
+						<foot>
+							<footer span="5" class="footer_right"
+								label="@load(vm.footer)" />
+						</foot>
+					</grid>
+				</div>
+			</center>
+		</borderlayout>
+	</div>
+</zk>

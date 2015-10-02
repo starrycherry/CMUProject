@@ -1,0 +1,20 @@
+<zk>
+<tabbox id="tb" height="auto">
+		<tabs id="tabs">
+			<tab id="financialList" label="Financial List" />
+			<tab id="searchList" label="Search List" />
+			<tab id="expert" label="Experts" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<include id="tp1" src="/twitter/Max/financialList.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include id="tp2" src="/twitter/Max/searchList.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include id="tp3" src="/twitter/Max/favoriteList.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</zk>

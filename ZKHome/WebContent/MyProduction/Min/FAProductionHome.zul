@@ -1,0 +1,38 @@
+<?page title="My Production"s contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+		<tabbox id="tabParent" width="100%" height="280px">
+			<tabs>
+				<tab>Production</tab>
+				<tab>Assets</tab>
+			</tabs>
+			<tabpanels>
+				<tabpanel id="ProductionSummary">
+					<toolbar>
+						<a>
+							<toolbarbutton label="Production Summary"
+								onClick='tp1.src="/MyProduction/Min/productionSummary.zul"' />
+						</a>
+					</toolbar>
+					<include id="tp1"
+						src="/MyProduction/Min/productionSummary.zul" />
+				</tabpanel>
+				<tabpanel id="AssetSummaryContent">
+					<toolbar>
+						<a>
+							<toolbarbutton label="Asset Summary"
+								onClick='tp2.src="/MyProduction/Min/assetSummary.zul"' />
+						</a>
+					</toolbar>
+					<include id="tp2"
+						src="/MyProduction/Min/assetSummary.zul" />
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+</zk>

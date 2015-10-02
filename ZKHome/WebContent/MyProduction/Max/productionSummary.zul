@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<grid id="faProductionSummaryGrid" autopaging="false"
+				mold="paging" pageSize="5" height="230px" width="98%"
+		apply="action.ProductionSummaryController"
+		emptyMessage="No Production Summary available.">
+
+		<columns menupopup="auto">
+			<column hflex="4" sort="auto"></column>
+			<column hflex="3" sort="auto">Today</column>
+			<column hflex="3" sort="auto">Yesterday</column>
+			<column hflex="3" sort="auto">MTD</column>
+			<column hflex="3" sort="auto">Last Month</column>
+			<column hflex="3" sort="auto">YTD</column>
+			<column hflex="3" sort="auto">Last Year</column>
+		</columns>
+		<zscript><![CDATA[
+			void doRedirect(String a, String b) {
+				tp1.src = "/MyProduction/Max/managerProductionInfo.zul?id=" + a + "_"
+						+ b;
+			}
+		]]></zscript>
+		<template name="model">
+			<row value="${each.name}">
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "NAME")'>
+					<label value="${each.name}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "TODAY")'>
+					<label value="${each.today}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "YEST")'>
+					<label value="${each.yesterday}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "MTD")'>
+					<label value="${each.mtd}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "PREVM")'>
+					<label value="${each.prev_month}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "YTD")'>
+					<label value="${each.ytd}" />
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "PREVM")'>
+					<label value="${each.prev_year}" />
+				</a>
+			</row>
+		</template>
+	</grid>
+	<separator spacing="5px" />
+	<vlayout apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('chartUtil.LineChartMyProductionVM')">
+		<chart id="chart" title="Report - Last Month" width="400"
+			height="400" paneColor="#FFFFFF" type="line" yAxis="Amount"
+			model="@bind(vm.model)" engine="@bind(vm.engine)"
+			threeD="@bind(vm.threeD)"
+			onClick="@command('showMessage',msg=event.areaComponent.tooltiptext)" />
+	</vlayout>
+</zk>

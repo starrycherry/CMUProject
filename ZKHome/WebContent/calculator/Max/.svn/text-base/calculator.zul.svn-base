@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<div align="center">
+		<html>
+			<iframe width="590" height="390"
+				src="http://web2.0calc.com/widgets/horizontal/" scrolling="no"
+				style="border: 1px solid #silver; ">
+			</iframe>
+			<br />
+			<a href="http://web2.0calc.com/">
+				Web 2.0 scientific calculator
+			</a>
+
+		</html>
+	</div>
+</zk>

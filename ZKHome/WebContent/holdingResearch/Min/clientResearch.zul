@@ -1,0 +1,141 @@
+<zk>
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.ClientComparator;
+	import dao.HoldingResearchUserRecordDao;
+	import dao.UserDao;
+	import bean.HoldingResearchUserRecord;
+	import bean.User;
+	Comparator nameAsc = new ClientComparator(true, 1);
+	Comparator nameDsc = new ClientComparator(false, 1);
+	Comparator typeAsc = new ClientComparator(true, 2);
+	Comparator typeDsc = new ClientComparator(false, 2);
+	Comparator researchAsc = new ClientComparator(true, 3);
+	Comparator researchDsc = new ClientComparator(false, 3);
+	Comparator dateAsc = new ClientComparator(true, 4);
+	Comparator dateDsc = new ClientComparator(false, 4);
+	HoldingResearchUserRecordDao rjUserRecordDao = new HoldingResearchUserRecordDao();
+	UserDao userDao = new UserDao();
+	User user = userDao.findUserByUsername((String) (Sessions.getCurrent()
+			.getAttribute("loginName")));
+	if (user == null) {
+		return;
+	}
+	HoldingResearchUserRecord hrUserRecord = rjUserRecordDao
+			.findUserRecordByUser(user.getUser_id());
+	void doNameMenu() {
+		hrUserRecord.setHoldings(nameMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doResearchMenu() {
+		hrUserRecord.setHresearch(researchMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doTypeMenu() {
+		hrUserRecord.setHtype(typeMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	void doDateMenu() {
+		hrUserRecord.setHdate(dateMenu.isChecked());
+		rjUserRecordDao.update(hrUserRecord);
+	}
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.FilterViewModelClient')">
+		<borderlayout height="250px">
+			<west title="Filter" size="160px" flex="true"
+				id="minCBorder" collapsible="true" open="@load(vm.minCBorder)"
+				onOpen="@command('doMinCBorder')">
+				<vbox>
+					<groupbox width="180px" mold="3d">
+						<caption label="Filter By Productions" />
+						<vbox>
+							<checkbox id="equities" label="Equities"
+								checked="@load(vm.equities)" onCheck="@command(doEquities)" />
+							<checkbox id="mutualFund"
+								label="Mutual Funds " checked="@load(vm.mutral)"
+								onCheck="@command(doMutual)" />
+							<checkbox id="fixedIncome"
+								label="Fixed Income " checked="@laod(vm.fixed)"
+								onCheck="@command(doFixedIncome)" />
+							<checkbox id="closedEnd"
+								label="Closed-End Funds " checked="@load(vm.closed)"
+								onCheck="@command(doClosedEnd)" />
+							<checkbox id="uit" label="UITs "
+								checked="@load(vm.uit)" onCheck="@command(doUit)" />
+							<button label="Update"
+								onClick="@command('checkClientFilters')" />
+						</vbox>
+					</groupbox>
+				</vbox>
+			</west>
+			<center>
+				<div>
+					<menupopup id="editPopup">
+						<menuitem label="Sort Ascending"
+							image="~./zul/img/grid/menu-arrowup.png" />
+						<menuitem label="Sort Descending"
+							image="~./zul/img/grid/menu-arrowdown.png" />
+						<menuitem label="Name" checkmark="true"
+							id="nameMenu" autocheck="true" checked="@load(vm.name)"
+							onCheck="doCheck();doNameMenu()" />
+						<menuitem label="Type" checkmark="true"
+							id="typeMenu" autocheck="true" checked="@load(vm.ctype)"
+							onCheck="doCheck();doTypeMenu()" />
+						<menuitem label="Research" checkmark="true"
+							id="researchMenu" autocheck="true" checked="@load(vm.cresearch)"
+							onCheck="doCheck();doResearchMenu()" />
+						<menuitem label="Date" checkmark="true"
+							id="dateMenu" autocheck="true" checked="@load(vm.cdate)"
+							onCheck="doCheck();doDateMenu()" />
+					</menupopup>
+					<zscript><![CDATA[
+	void doCheck() {
+		nameColumn.setVisible(nameMenu.isChecked());
+		researchColumn.setVisible(researchMenu.isChecked());
+		typeColumn.setVisible(typeMenu.isChecked());
+		dateColumn.setVisible(dateMenu.isChecked());
+
+	}
+]]></zscript>
+					<grid model="@load(vm.clientModel)" height="250px"
+						style="min-width: 500px">
+						<auxhead sclass="category-center">
+							<auxheader label="RJ Clients" colspan="4" />
+						</auxhead>
+						<columns menupopup="editPopup">
+							<column label="Name" hflex="2"
+								id="nameColumn" sortAscending="${holdingAsc}"
+								sortDescending="${holdingDsc}" visible="@laod(vm.name)" />
+							<column label="Type" hflex="1"
+								id="typeColumn" sortAscending="${typeAsc}"
+								sortDescending="${typeDsc}" visible="@laod(vm.ctype)" />
+							<column label="Research" hflex="2"
+								id="researchColumn" sortAscending="${researchAsc}"
+								sortDescending="${researchDsc}" visible="@load(vm.cresearch)" />
+							<column label="Date" hflex="2"
+								id="dateColumn" sortAscending="${dateAsc}"
+								sortDescending="${dateDsc}" visible="@load(vm.cdate)" />
+						</columns>
+						<template name="model">
+							<row>
+								<label value="@load(each.name)" />
+								<label value="@load(each.type)" />
+								<label value="@load(each.research)" />
+								<label value="@load(each.date)" />
+							</row>
+						</template>
+						<foot>
+							<footer span="4" class="footer_right"
+								label="@load(vm.footer)" />
+						</foot>
+					</grid>
+				</div>
+			</center>
+		</borderlayout>
+	</div>
+</zk>

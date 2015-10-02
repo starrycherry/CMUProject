@@ -1,0 +1,75 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<toolbar>
+		<a>
+			<toolbarbutton label="FixedIncome"
+				onClick='home.src="/fixedIncome/Max/fixedIncome1.zul"' />
+		</a>
+		<toolbarbutton label="875290BQ0" />
+	</toolbar>
+	<grid  style="min-width: 500px">
+		<auxhead>
+			<!--  <a
+				onClick='home.src="/holdingResearch/Max/clientResearch_holdingsList.zul"'>
+				<auxheader colspan="10" label="Client List" />
+				</a>  -->
+			<!-- <auxheader colspan="10" label="Client List" /> -->
+		</auxhead>
+		<columns>
+			<column label="Symbol" />
+			<column label="CUSIP" />
+			<column label="Description" />
+			<column label="Type" />
+			<column label="Issue Date" />
+			<column label="Maturity Date" />
+			<column label="Call Information" />
+			<column label="Debt Classification" />
+			<column label="Next Payment" />
+			<column label="Coupon Rate" align="right"/>
+		</columns>
+		<rows>
+			<row>
+				<label value="3TFW15" />
+				<label value="875290BQ0" />
+				<label
+					value="TAMPA FLORIDA WATER AND SEWER
+						REVENUE ZERO PERCENT SERIAL DISCOUNT BDS -
+						875290BQ0" />
+				<label value="Munical Bond-Revenue" />
+				<label value="05/01/1982" />
+				<label value="10/01/2015" />
+				<label
+					value="Callable on 10/01/2013 at
+						82.463 Callable on 04/01/2014 at 86.535 Callable
+						on 10/01/2014 at 90.809" />
+				<label value="Municipal Debt" />
+				<label value=" " />
+				<label value="0.00" />
+			</row>
+		</rows>
+	</grid>
+	<h:br />
+	<div align="center" sclass="clientChart">
+		<vlayout apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('chartUtil.StockChart')">
+			<chart id="chart" title="Market Price Chart" width="520"
+				height="350" paneColor="#FFFFFF" type="line" yAxis="Amount"
+				model="@bind(vm.model)" engine="@bind(vm.engine)" />
+			
+		</vlayout>
+		<a
+				onClick='home.src="/holdingResearch/Max/clientResearch_holdingsList.zul"'>
+				<!-- <h:h4> Client List </h:h4> -->
+				<label style="font-size:16px" value="Client List"/>
+			</a>
+	</div>
+
+</zk>

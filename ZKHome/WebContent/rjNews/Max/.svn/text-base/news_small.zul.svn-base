@@ -1,0 +1,53 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:x="xhtml" xmlns:zk="zk">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<window border="none">
+		<x:table>
+			<x:tr>
+				<x:td width="5px">
+					<html>
+
+						<image
+							src="http://media-cdn.tripadvisor.com/media/photo-s/01/e0/82/9c/newa-chen.jpg"
+							height="124px" width="128px">
+						</image>
+					</html>
+				</x:td>
+				<x:td>
+					<x:table>
+						<x:tr>
+							<x:td>
+								<x:table>
+									<x:tr>
+										<x:td>Title</x:td>
+									</x:tr>
+									<x:tr>
+										<x:td>Author:Me</x:td>
+									</x:tr>
+									<x:tr>
+										<x:td>Meta</x:td>
+									</x:tr>
+									<x:tr>
+										<x:td>Subscription</x:td>
+									</x:tr>
+								</x:table>
+							</x:td>
+							
+						</x:tr>
+					</x:table>
+				</x:td>
+			</x:tr>
+			<x:tr>
+				</x:tr>
+		</x:table>
+				<x:td>The news has just come in that ......</x:td>
+		
+	</window>
+</zk>

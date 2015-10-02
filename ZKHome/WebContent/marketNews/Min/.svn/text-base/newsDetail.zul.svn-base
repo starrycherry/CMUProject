@@ -1,0 +1,24 @@
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+<toolbar>
+		<a>
+			<!-- <toolbarbutton label="Market News"
+				onClick='marketNews1.src="/marketNews/Min/news.zul";marketNews.setWidth("50%")' /> -->
+				<toolbarbutton label="Market News"
+				onClick='marketNews1.src="/marketNews/Min/news.zul"' />
+		</a>
+		<toolbarbutton label="News Detail" />
+	</toolbar>
+<div>
+		<iframe id="url" style="height: 500px; width: 100%"
+			src="http://money.cnn.com/2013/07/26/investing/stocks-markets/index.html?iid=HP_LN">
+		</iframe>
+	</div>
+</zk>

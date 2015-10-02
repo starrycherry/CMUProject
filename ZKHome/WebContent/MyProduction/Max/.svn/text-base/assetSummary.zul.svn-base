@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<grid id="manAssetSummaryGrid"  autopaging="false" mold="paging" pageSize="7" 
+				apply="action.AssetSummaryController" height="225px" width="99%"
+				emptyMessage="No Asset Summary available.">
+		<auxhead>
+			<auxheader colspan="5" rowspan="1">
+				<radiogroup id="categorySelector">
+					<hlayout width="100%">
+						<radio checked="true" label="Account Type" width="90px" />
+						<radio label="Product Type" width="90px" />
+						<radio  label="Asset Class" width="90px" />
+					</hlayout>
+				</radiogroup>
+			</auxheader>
+		</auxhead>
+		<columns menupopup="auto">
+			<column hflex="2" label="" />
+			<column hflex="2" label="Asset Value" />
+			<column hflex="1" label="%" />
+		</columns>
+		<zscript><![CDATA[
+		void doRedirect(String a, String b) {
+			tp2.src = "/MyProduction/Max/assetInfo.zul?id=" + a + "_" + b;
+			}
+		]]></zscript>
+		<template name="model">
+			<row value="${each.subType}">
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "SUBTYPE")'>
+					<label value="${each.subType}"></label>
+				</a>
+				<a
+					onClick='doRedirect(self.getParent().getValue(), "VALUE")'>
+					<label value="${each.assetValue}"></label>
+				</a>
+				<label value="${each.percent}"></label>
+			</row>
+		</template>
+	</grid>
+	<vlayout apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('chartUtil.PieChartAssetsVM')">
+		<chart id="mychart" title="Asset Summary" width="400"
+			height="400" paneColor="#ffffff" fgAlpha="192" type="pie"
+			threeD="@bind(vm.threeD)" model="@bind(vm.model)"
+			engine="@bind(vm.engine)"
+			onClick="@command('showMessage',msg=event.areaComponent.tooltiptext)" />
+	</vlayout>
+</zk>

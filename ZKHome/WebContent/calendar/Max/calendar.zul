@@ -1,0 +1,795 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<window width="100%" height="100%">
+		<hlayout style="overflow: auto" onCreate="Cont()">
+			<hlayout sclass="z-valign-bottom">
+				<label value="Upcoming Events:" style="font-size:14px;"
+					height="100%" />
+			</hlayout>
+			<!-- <space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/><space/> -->
+			<!-- <separator/> -->
+			<!-- Upcoming
+				Events:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+				&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+			-->
+			<!-- <hlayout> -->
+			<hlayout valign="bottom">
+				<checkbox id="personal" label="Personal" checked="true"
+					onCheck='Cont()' />
+				<checkbox id="team" label="team" checked="true"
+					onCheck="Cont()" />
+				<checkbox id="client" label="Client" checked="true"
+					onCheck="Cont()" />
+				<checkbox id="corporate" label="Corporate"
+					checked="true" onCheck="Cont()" />
+			</hlayout>
+			<hlayout valign="bottom">
+				<button id="gToday" label="Go to today" mold="trendy"
+					onClick='cal1.setCurrentDate(java.util.Calendar.getInstance().getTime());' />
+
+				<button id="setMold" label="Month view" mold="trendy"
+					onClick='cal1.setMold("month")' />
+				<button id="chgView" label="Week view" mold="trendy"
+					onClick='cal1.setMold("default");cal1.setDays(7)' />
+				<button id="chgView1" label="Day view" mold="trendy"
+					onClick='cal1.setMold("default");cal1.setDays(1)' />
+				<button id="pw" label="Previous Page" mold="trendy"
+					onClick=" cal1.previousPage();" />
+				<button id="nw" label="Next Page"
+					onClick=" cal1.nextPage();" mold="trendy" />
+			</hlayout>
+		</hlayout>
+		<zscript><![CDATA[
+	final Checkbox personalV = personal;
+	SimpleCalendarModel sm = new SimpleCalendarModel();
+	public void addTM(CalendarEvent ce) {
+		sm.add(ce);
+	}
+	public CalendarEvent create() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 6, 31, 6, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with John Doe");
+		se.setTitle("Client");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 48);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create1() {
+		String fil = "Team";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 01, 14, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("green");
+		se.setHeaderColor("green");
+		se.setContent("Meeting with intern team");
+		se.setTitle("Team");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 3);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create2() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 01, 12, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Meeting with John Smith");
+		se.setTitle("Corporate");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 2);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create3() {
+		String fil = "Personal";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 01, 18, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("red");
+		se.setHeaderColor("red");
+		se.setContent("Opera th");
+		se.setTitle("Personal");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 4);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create4() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 02, 12, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Lunch meeting with branch colleagues");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 2);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create5() {
+		String fil = "Personal";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 3, 13, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("red");
+		se.setHeaderColor("red");
+		se.setContent("Lunch with daughter and her family");
+		se.setTitle("Personal");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 5);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create6() {
+		String fil = "Personal";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 4, 19, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("red");
+		se.setHeaderColor("red");
+		se.setContent("Dinner with Jacksons");
+		se.setTitle("Personal");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 3);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create7() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 5, 13, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Weekly meeting");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create8() {
+		String fil = "Team";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 5, 15, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("green");
+		se.setHeaderColor("green");
+		se.setContent("Weekly meeting with team");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create9() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 5, 19, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with John Doe");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 3);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create10() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 23, 11, 0);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Cherrie");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create11() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 20, 13, 0);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Simon");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create12() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 23, 14, 0);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Tami");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create13() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 23, 15, 0);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Patty");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create14() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 21, 16, 0);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Jason");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create15() {
+		String fil = "Team";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 23, 17, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("green");
+		se.setHeaderColor("green");
+		se.setContent("Meeting with intern team");
+		se.setTitle("Team");
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+
+	public CalendarEvent create16() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 24, 8, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Annual Get Togather");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 72);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create17() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 12, 11, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("FAs from other branches flying in");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 4);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create18() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 13, 12, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Over the phone training");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 2);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create19() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 14, 16, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Reporting");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+		
+	public CalendarEvent create20() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 14, 12, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with George");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create21() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 14, 14, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Sally");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create22() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 15, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Pam");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create23() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 15, 14, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Barbara");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create24() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 16, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Scamper");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 3);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create25() {
+		String fil = "Corporate";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 6, 12, 0);
+		//	ca.s
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("brown");
+		se.setHeaderColor("brown");
+		se.setContent("Client open meetings");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 96);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create26() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 6, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Colin");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create27() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 7, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Janet");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create28() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 8, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Peter");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create29() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 9, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Jack");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create30() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 10, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Tom");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create31() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 22, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Frank");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create32() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 26, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Hardy");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create33() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 27, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Frank");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create34() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 28, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Simon");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create35() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 29, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with John");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	public CalendarEvent create36() {
+		String fil = "Client";
+		java.util.Calendar ca = java.util.Calendar.getInstance();
+		ca.set(2013, 7, 30, 13, 30);
+		//	year, month-1, date, time hour, min
+		SimpleCalendarEvent se = new SimpleCalendarEvent();
+		se.setContentColor("blue");
+		se.setHeaderColor("blue");
+		se.setContent("Meeting with Janet");
+		se.setTitle(fil);
+		se.setBeginDate(ca.getTime());
+		ca.add(java.util.Calendar.HOUR, 1);
+		se.setEndDate(ca.getTime());
+		se.setLocked(true);
+		return se;
+
+	}
+	/*@org.zkoss.zk.ui.select.annotation.Listen("onCheck=#Personal")
+	 public void cont1() {
+	
+	 }*/
+	public void Cont() {
+		sm = new SimpleCalendarModel();
+		CalendarEvent cal;
+
+		if(personal.isChecked()==true){
+		cal = create3();
+		addTM(cal);
+		cal = create5();
+		addTM(cal);
+		cal = create6();
+		addTM(cal);
+		}
+
+		if (team.isChecked() == true) {
+			cal = create1();
+			addTM(cal);
+			cal = create8();
+			addTM(cal);
+			cal = create15();
+			addTM(cal);
+		}
+
+		if (corporate.isChecked() == true) {
+			cal = create2();
+			addTM(cal);
+			cal = create4();
+			addTM(cal);
+			cal = create7();
+			addTM(cal);
+			cal = create16();
+			addTM(cal);
+			cal = create17();
+			addTM(cal);
+			cal = create18();
+			addTM(cal);
+			cal = create19();
+			addTM(cal);
+			cal = create25();
+			addTM(cal);
+
+		}
+		if (client.isChecked() == true) {
+			cal = create();
+			addTM(cal);
+			cal = create9();
+			addTM(cal);
+			cal = create10();
+			addTM(cal);
+			cal = create11();
+			addTM(cal);
+			cal = create12();
+			addTM(cal);
+			cal = create13();
+			addTM(cal);
+			cal = create14();
+			addTM(cal);
+			cal = create20();
+			addTM(cal);
+			cal = create21();
+			addTM(cal);
+			cal = create22();
+			addTM(cal);
+			cal = create23();
+			addTM(cal);
+			cal = create24();
+			addTM(cal);
+			cal = create26();
+			addTM(cal);
+			cal = create27();
+			addTM(cal);
+			cal = create28();
+			addTM(cal);
+			cal = create29();
+			addTM(cal);
+			cal = create30();
+			addTM(cal);
+			cal = create31();
+			addTM(cal);
+			cal = create32();
+			addTM(cal);
+			cal = create33();
+			addTM(cal);
+			cal = create34();
+			addTM(cal);
+			cal = create35();
+			addTM(cal);
+			cal = create36();
+			addTM(cal);
+			
+			}
+		cal1.setModel(sm);
+	}
+]]>
+</zscript>
+		<calendars id="cal1" height="90%" firstDayOfWeek="Monday"
+			days="7" mold="month" readonly="true">
+			<!-- onCreate="Cont()" -->
+			<attribute name="onEventEdit"><![CDATA[
+	alert("aaas");
+]]>
+</attribute>
+		</calendars>
+
+	</window>
+	<!-- 	<label value="version hint 8" /> -->
+</zk>

@@ -1,0 +1,115 @@
+<?page title="Welcome to Raymond James Financial Application!" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style src="/css/style.css" />
+<style src="/css/Customize.css" />
+<zscript><![CDATA[
+	import service.StockInfoService;
+	StockInfoService stockInfoSer = new StockInfoService(Sessions.getCurrent());
+	stockInfoSer.getStocks();
+	stockInfoSer.storeInSession();
+]]></zscript>               
+<div sclass="title">
+		<div sclass="logo">
+			<image src="/images/logo.png" />
+		</div>
+		<div sclass="loginConfig">
+	    	<hlayout>
+	    		<image src="/images/signin.png" />
+	    		<a><label sclass="login" value="sign in">
+	    			<attribute name="onClick"><![CDATA[
+            			if (!loginWin.isVisible())
+                			loginWin.setVisible(true);
+            			loginWin.doHighlighted();
+        			]]></attribute>
+	    		</label></a>
+	    	</hlayout>
+	    </div>
+		<zscript><![CDATA[
+			String[] keywords = {"BOA","JP Morgan","Facebook","Google","LinkedIn","Apple","Amazon","Microsoft",
+		    "Oracle","Zynga","Groupon","PNC"};
+		]]></zscript>
+		<div sclass="search">
+		    <bandbox id="bd" mold="rounded" autodrop="true" width="200px">  
+		        <bandpopup>
+		            <listbox height="200px" width="300px" mold="paging" autopaging="true"
+		                onSelect="bd.value=self.selectedItem.label; bd.close();">
+		                <listhead>
+		                    <listheader label="Recommended keywords" />
+		                </listhead>
+		                <listitem label="${each}" forEach="${keywords}" />
+		            </listbox>
+		        </bandpopup>
+		    </bandbox>
+	    </div>
+</div>
+<div sclass="innerBorder">
+	<iframe width="100%" height="99%" src="http://www.raymondjames.com" />
+	<vlayout xmlns:c="client">
+    <window id="loginWin" title="Login to Raymond James Landing Page" width="290px" visible="false" minimizable="true" onOK="loginCheck()" border='normal' >
+        <style>
+	        div.minimize {
+	            border: 1px solid #79858E;
+	            background: #D3E1EC;
+	            position: absolute;
+	            opacity: 0.8;       
+	        }
+	        div.loginGrid { 
+	            border: none;
+	        }
+	        td.loginCtl {
+	            text-align: center;
+	        }
+	        td.loginCtl .z-label {
+	            color: red;         
+	            font-style: italic;
+	        }
+        </style>
+        <grid sclass="loginGrid">
+            <columns>
+                <column width="100px" />
+            </columns>
+            <rows>
+                <row>User Name : <textbox id="name" width="150px" c:onFocus="this.select()" /></row>
+                <row>Password : <textbox id="pwd" width="150px" type="password" c:onFocus="this.select()"/></row>
+                <row>
+                	<cell sclass="loginCtl" colspan="2">
+	                	<vlayout>
+	                    	<button mold="trendy" label="Submit" onClick="loginCheck()" width="100px"/>
+	                    	<label id="mesg" />
+	                	</vlayout>
+                	</cell>
+                </row>
+            </rows>
+        </grid>
+        <zscript><![CDATA[
+        import service.UserService;
+        import bean.User;
+        
+        void loginCheck () {
+        	UserService userSer = new UserService();
+        	User user = userSer.checkLogin(name.getValue(), pwd.getValue());
+            if (user != null) {
+                mesg.setValue("");
+                Clients.evalJavaScript("zk.Widget.$('$loginWin').setMinimized(true)");
+                Sessions.getCurrent().setAttribute("loginName", name.getValue());
+                Sessions.getCurrent().setAttribute("loginId", user.getUser_id());
+                String fullname = userSer.getFullNameById(user.getUser_id());
+                if(fullname == null || fullname.equals("")) {
+                	Sessions.getCurrent().setAttribute("fullname", "Financial Advisor");
+                } else {
+                	Sessions.getCurrent().setAttribute("fullname", fullname);
+                }
+                Sessions.getCurrent().setAttribute("loginRole", user.getRole());
+                Executions.sendRedirect("/dashboard/dashboard.zul");
+            } else {
+                mesg.setValue("User Name or Password Invalid!");
+                Clients.evalJavaScript("loginFaild()");
+            }; 
+        }
+        ]]></zscript>
+    </window>
+    <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.min.js" />
+    <script type="text/javascript" src="/js/customized_effect.js" />    
+</vlayout>
+</div>
+</zk>

@@ -1,0 +1,25 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+	<div align="center">
+		<html>
+			<a class="twitter-timeline"
+				href="https://twitter.com/starry_cherry/financial-list"
+				data-widget-id="366049336506867712" width="800px">
+				Tweets from @starry_cherry/financial-list
+			</a>
+			<script>
+				!function(d,s,id){var
+				js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+			</script>
+
+
+
+		</html>
+	</div>
+</zk>

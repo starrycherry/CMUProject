@@ -1,0 +1,57 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<grid id="listbox" 
+		apply="action.FAProductionController" height="225px" width="98%"
+		emptyMessage="No Production Details available.">
+		<auxhead>
+			<auxheader colspan="4" label="My Production Details" />
+		</auxhead>
+		<auxhead>
+			<auxheader colspan="4" rowspan="1">
+				<hlayout width="100%">
+					<checkbox id="l1" label="Commission"
+						forward="onCheck=onModifySelectedList" />
+					<checkbox id="l2" label="Fees"
+						forward="onCheck=onModifySelectedList" />
+					<checkbox id="l3" label="Trails"
+						forward="onCheck=onModifySelectedList" />
+					<checkbox id="l4" label="Directs"
+						forward="onCheck=onModifySelectedList" />
+				</hlayout>
+			</auxheader>
+		</auxhead>
+		<!-- <auxhead>
+			<auxheader colspan="4" rowspan="1">
+				From :
+				<datebox id="db1" cols="12" format="medium"
+					onCreate="self.value = new Date()" mold="rounded" />
+
+				To :
+				<datebox id="db2" cols="12" format="medium"
+					onCreate="self.value = new Date()" mold="rounded" />
+			</auxheader>
+
+		</auxhead> -->
+		<columns menupopup="auto">
+			<column hflex="3" label="Date" />
+			<column hflex="3" label="Amount" />
+			<column hflex="4" label="Category" />
+			<column hflex="8" label="Transaction Details" />
+		</columns>
+		<template name="model">
+			<row>
+				<label value="${each.date}"></label>
+				<label value="${each.amount}"></label>
+				<label value="${each.category}"></label>
+				<label value="${each.reason}"></label>
+			</row>
+		</template>
+	</grid>
+</zk>

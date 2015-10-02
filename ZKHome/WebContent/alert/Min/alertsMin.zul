@@ -1,0 +1,212 @@
+<?page title="ALERTS" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	<zscript><![CDATA[String loginName = (String) Sessions.getCurrent().getAttribute("loginName");if(loginName == null || loginName.equals("")) {Executions.sendRedirect("../../welcome.zul");}]]></zscript>
+	<style src="/css/alerts.css" />
+	<zscript><![CDATA[
+                      String[] languages = {"advisor","Financial","branch manager","stock","market news","clients","top 10 clients","ranking",
+                              "Go","Groovy","Haskell","HTML","Java","JavaScript","Lisp","Python","Ruby",
+                              "Scala","Scheme"}; 	
+    ]]></zscript>
+	
+	<tabbox id="tb" height="280px" style="min-width:488px" >
+    <tabs id="tabs" width="auto">
+        <tab id="summary" label="Summary" />
+        <tab id="stream" label="Stream" />
+    </tabs>
+    <toolbar width="auto">
+    <bandbox id="bd" mold="default" autodrop="true" buttonVisible="true" >
+		<bandpopup>
+			<listbox height="100px" width="270px" mold="paging" autopaging="true"
+                onSelect="bd.value=self.selectedItem.label; bd.close();">
+                <listhead>
+                    <listheader label="Programming Languages" />
+                </listhead>
+                <listitem label="${each}" forEach="${languages}" />
+            </listbox>
+		</bandpopup>
+    </bandbox>
+    </toolbar>
+    <tabpanels width="auto" height="auto" >
+    	<!--Summary-->
+        <tabpanel style="overflow:auto;" width="auto" height="auto" >
+        	<listbox id="itemsForAttention" width="100%" height="auto" >
+        		<listhead>
+        			<listheader label="Items for Attention" width="85%" />
+        			<listheader label="Quantity" width="15%" align="center" />
+        		</listhead>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Account Transfer Action Needed</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Cash &amp; Securities Due</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Delinquent Fees</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Documents Due</h:u></a></listcell>
+        			<listcell>4</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Insufficient Funds</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        	</listbox>
+        	<listbox id="notifications" width="100%" height="auto" >
+        		<listhead>
+        			<listheader label="Notifications" width="85%" />
+        			<listheader label="Quantity" width="15%" align="center" />
+        		</listhead>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Annual Fees This Month</h:u></a></listcell>
+        			<listcell>15</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Mandatory Corporate Actions</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>POA Expiring</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Research Changes</h:u></a></listcell>
+        			<listcell>3</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Trade Reviews</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        	</listbox>
+        	<listbox id="portfolioActivity" width="100%" height="auto" >
+        		<listhead>
+        			<listheader label="Portofolio Activity Past 7 Days" width="85%" />
+        			<listheader label="Quantity" width="15%" align="center" />
+        		</listhead>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>ACAT Out</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Bonds Maturing in 30 Days</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Open Orders</h:u></a></listcell>
+        			<listcell>12</listcell>
+        		</listitem>
+        		<listitem >
+        			<listcell><a style="color:blue"><h:u>Pending Bond Calls</h:u></a></listcell>
+        			<listcell>3</listcell>
+        		</listitem>
+        	</listbox>
+        </tabpanel>
+        <!--Stream-->
+        <tabpanel style="overflow:auto;" width="auto" height="auto" >
+        	<vlayout>
+        		<listbox id="streamList" apply="action.StreamController" width="99%" height="auto" >
+					<listhead>
+						<listheader label="Subject" width="80%" />
+						<listheader label="Publish Time" sort="auto" width="20%" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell><h:div>${each.subject}</h:div></listcell>
+							<listcell label="${each.time}"></listcell>
+						</listitem>
+					</template>
+				</listbox>
+				<zscript><![CDATA[
+				    import action.StreamController;           
+				                  
+              		public void doFavorite(String a) {
+              			System.out.println("ok1");
+              			if (a.equals("favorite0")) {
+              				System.out.println("ok2");
+              				if(StreamController.streams.get(0).getFavorite() == true) {
+              					StreamController.streams.get(0).setFavorite(false);
+              				} else {
+              					StreamController.streams.get(0).setFavorite(true);
+              				}
+              			} else if (a.equals("favorite1")) {
+              				System.out.println("ok3");
+              				if(StreamController.streams.get(1).getFavorite() == true) {
+              					StreamController.streams.get(1).setFavorite(false);
+              				} else {
+              					StreamController.streams.get(1).setFavorite(true);
+              				}
+              			} else {
+              				System.out.println("ok4");
+              				if(StreamController.streams.get(2).getFavorite() == true) {
+              					StreamController.streams.get(2).setFavorite(false);
+              				} else {
+              					StreamController.streams.get(2).setFavorite(true);
+              				}
+              			}
+
+              		}
+              		
+              		public void doAssign(String a) {
+              			System.out.println("ook1");
+              			if (a.equals("assign0")) {
+              				System.out.println("ook2");
+              				if(StreamController.streams.get(0).getAssign() == true) {
+              					StreamController.streams.get(0).setAssign(false);
+              				} else {
+              					StreamController.streams.get(0).setAssign(true);
+              				}
+              			} else if (a.equals("assign1")) {
+              				System.out.println("ook3");
+              				if(StreamController.streams.get(1).getAssign() == true) {
+              					StreamController.streams.get(1).setAssign(false);
+              				} else {
+              					StreamController.streams.get(1).setAssign(true);
+              				}
+              			} else {
+              				System.out.println("ook4");
+              				if(StreamController.streams.get(2).getAssign() == true) {
+              					StreamController.streams.get(2).setAssign(false);
+              				} else {
+              					StreamController.streams.get(2).setAssign(true);
+              				}
+              			}
+              		}
+              		
+              		public void doHidden(String a) {
+              			System.out.println("oook1");
+              			if (a.equals("hidden0")) {
+              				System.out.println("oook2");
+              				if(StreamController.streams.get(0).getHidden() == true) {
+              					StreamController.streams.get(0).setHidden(false);
+              				} else {
+              					StreamController.streams.get(0).setHidden(true);
+              				}
+              			} else if (a.equals("hidden1")) {
+              				System.out.println("oook3");
+              				if(StreamController.streams.get(1).getHidden() == true) {
+              					StreamController.streams.get(1).setHidden(false);
+              				} else {
+              					StreamController.streams.get(1).setHidden(true);
+              				}
+              			} else {
+              				System.out.println("oook4");
+              				if(StreamController.streams.get(2).getHidden() == true) {
+              					StreamController.streams.get(2).setHidden(false);
+              				} else {
+              					StreamController.streams.get(2).setHidden(true);
+              				}
+              			}
+              		}
+              		
+
+				]]></zscript>
+
+        	</vlayout>
+        	
+        </tabpanel>
+    </tabpanels>
+	</tabbox>
+</zk>

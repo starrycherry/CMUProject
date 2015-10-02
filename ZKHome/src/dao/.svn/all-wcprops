@@ -1,0 +1,197 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/269/ZKHome/src/dao
+END
+ProductionDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/29/ZKHome/src/dao/ProductionDataDao.java
+END
+HibernateBaseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/215/ZKHome/src/dao/HibernateBaseDao.java
+END
+ChartColors.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/3/ZKHome/src/dao/ChartColors.java
+END
+HoldingData.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/230/ZKHome/src/dao/HoldingData.java
+END
+ContactData.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/76/ZKHome/src/dao/ContactData.java
+END
+UserDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/241/ZKHome/src/dao/UserDao.java
+END
+FixedIncomeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/269/ZKHome/src/dao/FixedIncomeData.java
+END
+UserPortalColumnDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3/ZKHome/src/dao/UserPortalColumnDao.java
+END
+ManagerAssetDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/82/ZKHome/src/dao/ManagerAssetDataDao.java
+END
+PageDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/153/ZKHome/src/dao/PageDao.java
+END
+ManagerProductionDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/132/ZKHome/src/dao/ManagerProductionDataDao.java
+END
+CashData.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/242/ZKHome/src/dao/CashData.java
+END
+MarketNewsData.java
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/70/ZKHome/src/dao/MarketNewsData.java
+END
+FormsData.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/139/ZKHome/src/dao/FormsData.java
+END
+TopFADataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/82/ZKHome/src/dao/TopFADataDao.java
+END
+HoldingResearchUserRecordDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/144/ZKHome/src/dao/HoldingResearchUserRecordDao.java
+END
+FormsSubmittedData.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/139/ZKHome/src/dao/FormsSubmittedData.java
+END
+CashBalanceData.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/242/ZKHome/src/dao/CashBalanceData.java
+END
+MyProductionChartDataDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3/ZKHome/src/dao/MyProductionChartDataDAO.java
+END
+StreamData.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/67/ZKHome/src/dao/StreamData.java
+END
+RoleTestDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/82/ZKHome/src/dao/RoleTestDao.java
+END
+AssetFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/3/ZKHome/src/dao/AssetFilter.java
+END
+ClientInfoData.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/3/ZKHome/src/dao/ClientInfoData.java
+END
+ClientRankData.java
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/240/ZKHome/src/dao/ClientRankData.java
+END
+PieChartAssetsData.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/257/ZKHome/src/dao/PieChartAssetsData.java
+END
+ReportData.java
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/3/ZKHome/src/dao/ReportData.java
+END
+PopulateDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/164/ZKHome/src/dao/PopulateDataDao.java
+END
+HoldingInfoData.java
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/3/ZKHome/src/dao/HoldingInfoData.java
+END
+AssetDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/82/ZKHome/src/dao/AssetDataDao.java
+END
+ClientData.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/240/ZKHome/src/dao/ClientData.java
+END
+FAProductionDataDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/84/ZKHome/src/dao/FAProductionDataDao.java
+END
+ExpertsData.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/3/ZKHome/src/dao/ExpertsData.java
+END

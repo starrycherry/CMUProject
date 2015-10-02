@@ -1,0 +1,110 @@
+<?page title="Top FA" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+
+	<style src="/widgets/grid/master_detail/style.css" />
+	<div>
+		<radiogroup id="sv1" />
+		<combobox value="Top Production" autodrop="true" width="150px"
+			mold="rounded" readonly="true">
+			<comboitem id="topProd" label="Top Production" />
+			<comboitem id="assetAmt" label="Asset Amount" />
+		</combobox>
+
+		<radio id="daily" label="Daily" radiogroup="sv1" />
+		<radio id="monthly" label="Monthly" radiogroup="sv1" />
+		<radio id="yearly" label="Yearly" radiogroup="sv1"
+			selected="true" />
+
+		<separator spacing="5px" />
+	</div>
+
+	<separator spacing="5px" />
+	<grid oddRowSclass="myodd">
+		<columns menupopup="auto">
+			<column width="40px" />
+			<column width="140px" label="FA Name" />
+			<column width="600px" />
+			<column width="300px" label="Value" />
+		</columns>
+		<rows>
+			<row>
+				<detail open="false">
+					<hlayout>
+						<image sclass="myimg" width="140px"
+							height="100px" src="/images/contact1.png" />
+						<vlayout>
+							<grid>
+								<columns menupopup="auto">
+									<column hflex="2" label="" />
+									<column hflex="1" label="Today" />
+									<column hflex="1" label="Yesterday" />
+									<column hflex="1" label="MTD" />
+									<column hflex="1" label="Last Month" />
+									<column hflex="1" label="YTD" />
+									<column hflex="1" label="Last Year" />
+								</columns>
+								<rows>
+									<row>
+										<label value="Commissions" />
+										<label value="$23,000.00" />
+										<label value="$21,000.00" />
+										<label value="$79,000.00" />
+										<label value="$13,000.00" />
+										<label value="$45,000.00" />
+										<label value="$65,000.00" />
+										
+									</row>
+								</rows>
+							</grid>
+						</vlayout>
+					</hlayout>
+				</detail>
+				<label value="Prateek" />
+				<progressmeter id="temp" value="100" width="250px" />
+				<label value="$292,000.00" sclass="price" />
+			</row>
+			<row>
+				<detail open="false">
+					<hlayout>
+						<image sclass="myimg" width="140px"
+							height="100px" src="/images/contact1.png" />
+						<vlayout>
+							<grid>
+								<columns menupopup="auto" width="400px">
+									<column hflex="2" label="" />
+									<column hflex="1" label="Today" />
+									<column hflex="1" label="Yesterday" />
+									<column hflex="1" label="MTD" />
+									<column hflex="1" label="Last Month" />
+									<column hflex="1" label="YTD" />
+									<column hflex="1" label="Last Year" />
+								</columns>
+								<rows>
+									<row>
+										<label value="Commissions" />
+										<label value="$13,000.00" />
+										<label value="$21,000.00" />
+										<label value="$20,300.00" />
+										<label value="$33,000.00" />
+										<label value="$45,000.00" />
+										<label value="$15,000.00" />
+									</row>
+								</rows>
+							</grid>
+						</vlayout>
+					</hlayout>
+				</detail>
+				<label value="Michael" />
+				<progressmeter id="curr_met" value="90" width="250px" />
+				<label value="$202,000.00" sclass="price" />
+			</row>
+		</rows>
+	</grid>
+</zk>

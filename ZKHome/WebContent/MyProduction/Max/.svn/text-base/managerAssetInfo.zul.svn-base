@@ -1,0 +1,34 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<grid id="listbox" apply="action.ManagerAssetInfoController" height="500px" width="98%"
+		emptyMessage="No Asset Details available.">
+		<auxhead>
+			<auxheader colspan="4" label="Asset Details" />
+		</auxhead>
+		<columns menupopup="auto">
+			<column hflex="3" label="FA Number" />
+			<column hflex="3" label="FA Name" />
+			<column hflex="3" label="Client Name" />
+			<column hflex="4" label="Account Type" />
+			<column hflex="4" label="Asset Value" />
+			<column hflex="3" label="Last Updated" />
+		</columns>
+		<template name="model">
+			<row>
+				<label value="${each.fa_number}"></label>
+				<label value="${each.fa_name}"></label>
+				<label value="${each.c_name}"></label>
+				<label value="${each.account_type}"></label>
+				<label value="${each.asset_val}"></label>
+				<label value="${each.updated}"></label>
+			</row>
+		</template>
+	</grid>
+</zk>

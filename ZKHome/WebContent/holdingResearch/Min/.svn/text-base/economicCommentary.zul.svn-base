@@ -1,0 +1,116 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<div align="center">
+		<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+
+		<groupbox width="100%" mold="3d" height="210px"
+			contentStyle="overflow:auto">
+			<caption label="Economic Commentary" />
+			<hbox>
+				<vbox>
+					<image src="/images/msn2.gif" context="editPopup"
+						sclass="photo" />
+					<menupopup id="editPopup">
+						<menuitem label="Message" />
+						<menuseparator />
+						<menuitem label="Profile" />
+						<menuitem label="Mail to" />
+						<menuseparator />
+						<menu label="Group">
+							<menupopup>
+								<menu label="Add to...">
+									<menupopup>
+										<menuitem label="Member"
+											autocheck="true" checkmark="true" checked="true" />
+										<menuitem label="Managers"
+											autocheck="true" checkmark="true" />
+										<menuitem label="Guest"
+											autocheck="true" checkmark="true" />
+										<menuitem label="Customers"
+											autocheck="true" checkmark="true" />
+									</menupopup>
+								</menu>
+								<menu label="Move to...">
+									<menupopup>
+										<menuitem label="Member"
+											autocheck="true" checkmark="true" />
+										<menuitem label="Managers"
+											autocheck="true" checkmark="true" />
+										<menuitem label="Guest"
+											autocheck="true" checkmark="true" />
+										<menuitem label="Customers"
+											autocheck="true" checkmark="true" />
+									</menupopup>
+								</menu>
+							</menupopup>
+						</menu>
+						<menuitem label="Block" />
+						<menuitem label="Remove contant" />
+					</menupopup>
+					<div align="center">
+						<h:b>Alan Greenspan</h:b>
+						<h:br />
+						Chief Economist
+						<h:br />
+						<a>Full Profile</a>
+					</div>
+				</vbox>
+				<groupbox width="480px" height="auto"
+					sclass="commentary">
+					<caption label="Alan Greenspan" />
+					<grid  style="min-width: 500px">
+						<columns>
+							<column width="400px">Commentary</column>
+							<column>Time</column>
+						</columns>
+						<rows>
+							<row>
+								<div align="left">
+									<a>
+										US government sues Bank of America
+									</a>
+									<h:ul>
+										<h:li>Financial Times</h:li>
+										<h:li>
+											Financials buoy US stock
+											markets
+										</h:li>
+										<h:li>
+											Emerged from the US
+											financial crisis
+										</h:li>
+									</h:ul>
+								</div>
+								<div>4 days ago</div>
+							</row>
+							<row>
+								<div align="left">
+									<a>
+										CORRECTED-Mexico's IPC stock index down 1 pct
+									</a>
+									<h:ul>
+										<h:li>Financial Times</h:li>
+										<h:li>
+											Financials buoy US stock
+											markets
+										</h:li>
+										<h:li>
+											Emerged from the US
+											financial crisis
+										</h:li>
+									</h:ul>
+								</div>
+								<div>4 days ago</div>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</hbox>
+		</groupbox>
+	</div>
+</zk>

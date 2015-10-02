@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+<tabbox id="tb" height="280px" style="min-width: 500px">
+	<tabs id="tabs">
+		<tab id="newsFeed1" label="Market News" />
+		<tab id="newsFeed2" label="News Feeds1" />
+		<tab id="newsFeed3" label="News Feeds2" />
+	</tabs>
+	<tabpanels>
+		<tabpanel><include id="marketNews1" src="/marketNews/Min/news.zul" /></tabpanel>
+		<tabpanel><include id="marketNews2" src="" /></tabpanel>
+		<tabpanel><include id="marketNews3" src="" /></tabpanel>
+	</tabpanels>
+</tabbox>
+</zk>

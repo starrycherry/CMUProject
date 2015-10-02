@@ -1,0 +1,40 @@
+<zk>
+	<div height="auto">
+		<zscript><![CDATA[
+	void changeExpertsView() {
+		if (expertsViewList.getValue().equals("Economic Commentary")) {
+			expertsView.src = "/holdingResearch/Min/economicCommentary.zul";
+		} else if (expertsViewList.getValue().equals("Market Strategy")) {
+			expertsView.src = "/holdingResearch/Min/marketStrategy.zul";
+		} else if (expertsViewList.getValue().equals("3rd Party Commentary")) {
+			expertsView.src = "/holdingResearch/Min/3rdPartyCommentary.zul";
+		} else {
+			expertsView.src = "/holdingResearch/Min/professionallySpeaking.zul";
+		}
+	}
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+		<div align="right" apply="org.zkoss.bind.BindComposer"
+			class="combodivarea"
+			viewModel="@id('vm') @init('view_model.ExpertsViewModel')">
+			<hbox>
+				<label value="Information: " class="boxlabel" />
+				<combobox mold="rounded" readonly="true"
+					id="expertsViewList" width="170px" model="@load(vm.infoList)"
+					selectedItem="@bind(vm.expertsView)"
+					onChange="changeExpertsView()">
+					<template name="model">
+						<comboitem label="@load(each)" />
+					</template>
+				</combobox>
+			</hbox>
+		</div>
+		<div>
+			<include id="expertsView"
+				src="/holdingResearch/Min/economicCommentary.zul" />
+		</div>
+	</div>
+</zk>

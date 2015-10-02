@@ -1,0 +1,44 @@
+<zk xmlns:n="native">
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.HoldingComparator;
+	Comparator researchAsc = new HoldingComparator(true, 3);
+	Comparator researchDsc = new HoldingComparator(false, 3);
+	Comparator dateAsc = new HoldingComparator(true, 5);
+	Comparator dateDsc = new HoldingComparator(false, 5);
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+	<div align="left" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.FilterViewModelHolding')">
+		<groupbox width="100%">
+			<caption label="Bank of America - BOA - 060505583" />
+			<groupbox mold="3d" width="100%">
+				<caption label="Research of Bank of America" />
+				<grid model="@load(vm.holdingModel)"  style="min-width: 1000px">
+					<columns menupopup="auto">
+						<column label="Research" hflex="2"
+							sortAscending="${researchAsc}" sortDescending="${researchDsc}" />
+						<column label="Date" hflex="2"
+							sortAscending="${dateAsc}" sortDescending="${dateDsc}" />
+					</columns>
+					<template name="model">
+						<row>
+							<a
+								onClick='tp2.src="/holdingResearch/Max/clientArticle.zul"'>
+								<label value="@load(each.research)" />
+							</a>
+							<label value="@load(each.date)" />
+						</row>
+					</template>
+					<foot>
+						<footer span="4" class="footer_right"
+							label="@load(vm.footer)" />
+					</foot>
+				</grid>
+			</groupbox>
+		</groupbox>
+	</div>
+</zk>

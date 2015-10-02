@@ -1,0 +1,97 @@
+<zk xmlns:h="native">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+<borderlayout height="250px" apply="org.zkoss.bind.BindComposer" 
+		    viewModel="@id('vm') @init('view_model.ContactViewModel')">
+	<west width="290px" autoscroll="true" border="0">
+		<div width="290px" height="auto">
+			<zscript><![CDATA[
+				String[] keywords = {"Jeff Eppinger","Carey","Cherrie","Wei Wang","Jason","Sahil","Prateek","Vivian","Terry",
+			    "Sophie"};
+			]]></zscript>
+			<div style="padding: 5px">
+				<hlayout>
+					<div>
+						<button mold="trendy" image="/images/new_contact.png" onClick='Messagebox.show("Add New Contact in Outlook", "Open Outlook", Messagebox.OK, Messagebox.EXCLAMATION)' />
+					</div>
+					<div>
+					    <bandbox id="bd" mold="rounded" autodrop="true" width="210px">  
+					        <bandpopup>
+					            <listbox height="150px" width="200px" 
+					                onSelect="bd.value=self.selectedItem.label; bd.close();">
+					                <listhead>
+					                    <listheader label="Recently Searched" />
+					                </listhead>
+					                <listitem label="${each}" forEach="${keywords}" />
+					            </listbox>
+					        </bandpopup>
+					    </bandbox>
+				    </div>
+		    	</hlayout>
+		    </div>
+		    <div>
+			    <listbox sclass="employee-list" vflex="true" hflex="1"
+	            model="@load(vm.contactList)" selectedItem="@bind(vm.selectedContact)" height="200px">
+		            <listhead>
+		                <listheader label="Full Name" align="center" />
+		                <listheader label="Phone" align="center" />
+		                <listheader label="Company" align="center" />
+		            </listhead>
+		            <template name="model" var="contact">
+		                <listitem>
+		                    <listcell label="@load(contact.fullName)" />
+		                    <listcell label="@load(contact.phone)" />
+		                    <listcell label="@load(contact.company)" />
+		                </listitem>
+		            </template>
+        		</listbox>
+		    </div>
+		</div>
+	</west>
+	<center border="0">
+		<borderlayout width="310px">
+			<west border="0" title="Contact Information" width="310px" collapsible="true">
+				<div align="center">
+					<vlayout>
+						<hlayout>
+							<image src="@load(vm.selectedContact.photo)" />
+							<vlayout>
+								<div>
+									<label value="@load(vm.selectedContact.firstName)" />
+									<label value="@load(vm.selectedContact.lastName)" />
+								</div>
+								<label value="@load(vm.selectedContact.title)" />
+								<label value="@load(vm.selectedContact.company)" />
+							</vlayout>
+						</hlayout>
+						<grid >
+							<rows>
+								<row>
+									<label value="Phone" />
+									<label value="@load(vm.selectedContact.phone)" />
+								</row>
+								<row>
+									<label value="Email" />
+									<label value="@load(vm.selectedContact.email)" />
+								</row>
+								<row>
+									<label value="Address" />
+									<label value="@load(vm.selectedContact.address)" />
+								</row>
+							</rows>
+						</grid>
+					</vlayout>
+				</div>
+			</west>
+			<center border="0">
+			</center>
+		</borderlayout>
+	</center>
+</borderlayout>
+</zk>

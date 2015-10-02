@@ -1,0 +1,60 @@
+<?page title="Manager Production Info" contentType="text/html;charset=UTF-8"?>
+<zk>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}]]></zscript>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('view_model.MyProductionViewModel')">
+		<borderlayout height="430px">
+			<north border="none" style="padding: 5px 5px 5px 5px">
+				<hlayout width="100%">
+
+					<checkbox id="l1" label="Commissions" />
+					<checkbox id="l2" label="Fees" />
+					<checkbox id="l3" label="Trails" />
+					<checkbox id="l4" label="Directs" />
+					From:
+					<datebox id="dateFrom" mold="rounded"
+						format="MM/dd/yyyy" constraint="no empty" />
+
+					To:
+					<datebox id="dateTo" mold="rounded"
+						format="MM/dd/yyyy" constraint="no empty" />
+
+					<separator spacing="5px" />
+					<button label="Update"
+						onClick="@command('checkChangeFilters')" />
+
+				</hlayout>
+			</north>
+			<center border="none" style="padding: 5px 5px 5px 5px">
+
+				<grid id="listbox" model="@load(vm.holdingModel)"
+					apply="action.ManagerProductionController" height="225" width="97%"
+					emptyMessage="No Production Details available.">
+
+					<columns menupopup="auto">
+						<column hflex="2" label="FA Number" />
+						<column hflex="3" label="FA Name" />
+						<column hflex="2" label="Date" />
+						<column hflex="3" label="Amount" />
+						<column hflex="3" label="Category" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${each.fa_number}"></label>
+							<label value="${each.fa_name}"></label>
+							<label value="${each.date}"></label>
+							<label value="${each.amount}"></label>
+							<label value="${each.category}"></label>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</div>
+</zk>

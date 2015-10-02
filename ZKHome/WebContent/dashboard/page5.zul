@@ -1,0 +1,65 @@
+<?page id="page5"?>
+<window id="main" border="none" apply="action.MainPortalController" xmlns:n="native">
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../welcome.zul");
+}
+]]></zscript>
+	<label id="pageLabel" value="5" style="display: none" />
+	<style src="/css/Customize.css" />
+	<style src="/css/style.css" />
+	<div id="preferencePanel" sclass="configPanel" visible="false" height="280px">
+			<hlayout>
+				<div style="margin-right: 10px"><space/><space/> <n:b>Add New Widget (8 Widgets Per Page)</n:b></div>
+				<div> <a onClick="preferencePanel.setVisible(false)" >X</a></div>
+			</hlayout>
+		<radiogroup id="columnSelect">
+			<div sclass="steps">
+				<hlayout>
+					<image src="/images/number1.png" />
+					<space spacing="10px" />
+					<listbox id="widgetListbox" mold="select" width="auto" style="margin-top: 6px;"/><attribute name="onCreate"><![CDATA[
+						String str="major world indices";
+						widgetListbox.setWidth(Integer.toString((str.length()*7)+10)+"px");
+					]]></attribute>
+				</hlayout>
+			</div>
+			<div sclass="steps">
+				<hlayout>
+					<image src="/images/number2.png" />
+					<space spacing="50px" />
+					<button mold="trendy" id="addbtn" label="Add" dir="reverse" image="/images/plus.png" style="margin-top: 6px;"/>
+				</hlayout>
+			</div>
+			<div sclass="steps">
+				<label id="addPageError" style="color: red;" value="" />
+			</div>
+			<div>
+			<hlayout style="margin-left: 75px; width: 200px;">
+				<checkbox label="Show details of widgets" id="detWid"></checkbox>
+			</hlayout>
+			</div>
+			<div id="detailDiv">
+			<hlayout>
+			<grid style="border: none">
+			<columns>
+			<column width="30%"/>
+			<column ></column>
+			</columns>
+			<rows>
+			<row><image id="descImg" width="128" height="128"></image> <label id="descLab"/> </row>
+			
+			</rows>
+			</grid>
+			</hlayout>
+			</div>
+			</radiogroup>
+	</div>
+	<portallayout id="portalLayout" maximizedMode="whole" sclass="portal">
+		<portalchildren id="ptc1" width="50%" style="padding:5px;" />
+		<portalchildren id="ptc2" width="50%" style="padding:5px;" />
+	</portallayout>
+</window>

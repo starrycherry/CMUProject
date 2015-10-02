@@ -1,0 +1,78 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.CashComparator;
+	Comparator relationAsc = new CashComparator(true, 2);
+	Comparator relationDsc = new CashComparator(false, 2);
+	Comparator accNameAsc = new CashComparator(true, 3);
+	Comparator accNameDsc = new CashComparator(false, 3);
+	Comparator accNumberAsc = new CashComparator(true, 4);
+	Comparator accNumberDsc = new CashComparator(false, 4);
+	Comparator availCashAsc = new CashComparator(true, 7);
+	Comparator availCashDsc = new CashComparator(false, 7);
+	Comparator percentAsc = new CashComparator(true, 8);
+	Comparator percentDsc = new CashComparator(false, 8);
+	import java.util.Calendar;
+	Calendar now = Calendar.getInstance();
+	now.add(Calendar.DATE, -1);
+	Date date = now.getTime();
+]]></zscript>
+	<div align="center">
+
+		<hlayout width="750px" style="padding: 10px 10px 10px 10px">
+			Available cash is bigger than
+			<doublespinner id="greaterA" value="0.00" hflex="1" step="100.00"
+				constraint="no empty,no negative" format="$,##0.00" mold="rounded"/>
+			and % of Portfolio is bigger than
+			<doublespinner id="greaterP" value="0.00" hflex="1" step="0.01"
+				constraint="no empty,no negative" format="0.00%" mold="rounded"/>
+			on
+			<datebox id="dateOn"  value="${date}" hflex="1"
+				mold="rounded" format="MM/dd/yyyy" constraint="no empty" />
+		</hlayout>
+
+		<hlayout width="auto" style="padding: 0px 10px 10px 10px" >
+			<grid vflex="1" height="340px" style="min-width:830px "
+				apply="action.CashAvailController">
+
+				<columns menupopup="auto">
+					<column label="Relationship" sort="auto" style="min-width:200px "
+						 sortAscending="${relationAsc}"
+						sortDescending="${relationDsc}" align="left"/>
+					<column label="Account Name" sort="auto" style="min-width:200px "
+						 sortAscending="${accNameAsc}"
+						sortDescending="${accNameDsc}" align="left"/>
+					<column label="Account Number" sort="auto" style="min-width:200px "
+						 sortAscending="${accNumberAsc}"
+						sortDescending="${accNumberDsc}" align="left"/>
+					<column label="Avail. Cash&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" sort="auto" style="min-width:150px "
+						 sortAscending="${availCashAsc}"
+						sortDescending="${availCashDsc}" align="right"/>
+					<column label="% of Portfolio &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" sort="auto" style="min-width:80px "
+						 sortAscending="${percentAsc}"
+						sortDescending="${percentDsc}" align="right" />
+				</columns>
+				<template name="model">
+					<row>
+						<label value="${each.relationship}"></label>
+						<label value="${each.accountName}"></label>
+						<label value="${each.accountNumber}"></label>
+						<label value="${each.availCash}"></label>
+						<label value="${each.percentage}"></label>
+					</row>
+				</template>
+			</grid>
+		</hlayout>
+
+	</div>
+</zk>

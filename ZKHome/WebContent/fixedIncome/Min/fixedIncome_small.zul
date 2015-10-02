@@ -1,0 +1,79 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.FixedIncomeComparator;
+	Comparator clientAsc = new FixedIncomeComparator(true, 1);
+	Comparator clientDsc = new FixedIncomeComparator(false, 1);
+	Comparator CUSIPAsc = new FixedIncomeComparator(true, 2);
+	Comparator CUSIPDsc = new FixedIncomeComparator(false, 2);
+	Comparator marketPriceAsc = new FixedIncomeComparator(true, 3);
+	Comparator marketPriceDsc = new FixedIncomeComparator(false, 3);
+	Comparator quantityAsc = new FixedIncomeComparator(true, 6);
+	Comparator quantityDsc = new FixedIncomeComparator(false, 6);
+	Comparator pendingAsc = new FixedIncomeComparator(true, 4);
+	Comparator pendingDsc = new FixedIncomeComparator(false, 4);
+	Comparator maturityAsc = new FixedIncomeComparator(true, 5);
+	Comparator maturityDsc = new FixedIncomeComparator(false, 5);
+	Comparator couponAsc = new FixedIncomeComparator(true, 7);
+	Comparator couponDsc = new FixedIncomeComparator(false, 7);
+	Comparator ratingAsc = new FixedIncomeComparator(true, 8);
+	Comparator ratingDsc = new FixedIncomeComparator(false, 8);
+]]></zscript>
+
+
+
+	<grid height="280px" apply="action.FixedIncomeController"
+		width="auto" style="min-width: 500px">
+		<auxhead>
+			<auxheader colspan="6" rowspan="1">
+				<checkbox id="maturity"
+					label="maturity in next 30 days" />
+				<checkbox id="callPending"
+					label="pending in next 30 days" />
+				<checkbox id="pending" label="is pending" />
+			</auxheader>
+		</auxhead>
+		<columns menupopup="auto">
+			<column label="Client" sortAscending="${clientAsc}"
+				sortDescending="${clientDsc}" />
+			<column label="CUSIP/Symbol" sortAscending="${CUSIPAsc}"
+				sortDescending="${CUSIPDsc}" />
+			<column label="Market Price"
+				sortAscending="${marketPriceAsc}"
+				sortDescending="${marketPriceDsc}" align="right"/>
+			<column label="Quantity" sortAscending="${quantityAsc}"
+				sortDescending="${quantityDsc}" align="right"/>
+			<column label="Pending Call" sortAscending="${pendingAsc}"
+				sortDescending="${pendingDsc}" />
+			<column label="Maturity Date" sortAscending="${maturityAsc}"
+				sortDescending="${maturityDsc}" />
+
+		</columns>
+		<template name="model">
+			<row>
+
+				<label value="${each.clientName}" />
+
+				<label value="${each.CUSIP}" />
+
+				<label value="${each.marketPrice}" />
+				<label value="${each.quantity}" />
+				<label value="${each.pendingCall}" />
+				<label value="${each.maturity}" />
+			</row>
+		</template>
+		<foot>
+			<footer span="6" class="footer_right" id="footer" />
+		</foot>
+	</grid>
+
+</zk>

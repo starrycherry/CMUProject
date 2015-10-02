@@ -1,0 +1,94 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.FixedIncomeComparator;
+	Comparator clientAsc = new FixedIncomeComparator(true, 1);
+	Comparator clientDsc = new FixedIncomeComparator(false, 1);
+	Comparator CUSIPAsc = new FixedIncomeComparator(true, 2);
+	Comparator CUSIPDsc = new FixedIncomeComparator(false, 2);
+	Comparator marketPriceAsc = new FixedIncomeComparator(true, 3);
+	Comparator marketPriceDsc = new FixedIncomeComparator(false, 3);
+	Comparator quantityAsc = new FixedIncomeComparator(true, 6);
+	Comparator quantityDsc = new FixedIncomeComparator(false, 6);
+	Comparator pendingAsc = new FixedIncomeComparator(true, 4);
+	Comparator pendingDsc = new FixedIncomeComparator(false, 4);
+	Comparator maturityAsc = new FixedIncomeComparator(true, 5);
+	Comparator maturityDsc = new FixedIncomeComparator(false, 5);
+	Comparator couponAsc = new FixedIncomeComparator(true, 7);
+	Comparator couponDsc = new FixedIncomeComparator(false, 7);
+	Comparator ratingAsc = new FixedIncomeComparator(true, 8);
+	Comparator ratingDsc = new FixedIncomeComparator(false, 8);
+]]></zscript>
+	<div>
+		<div>
+			
+
+			<grid height="auto" id="incomeList"
+				apply="action.FixedIncomeController"  style="min-width: 500px">
+				<auxhead>
+					<auxheader colspan="5" rowspan="1">
+						<checkbox id="maturity"
+							label="maturity in next 30 days" />
+						<checkbox id="callPending"
+							label="pending in next 30 days" />
+						<checkbox id="pending" label="is pending" />
+					</auxheader>
+				</auxhead>
+				<columns menupopup="auto">
+					<column label="Client" width="80px"
+						sortAscending="${clientAsc}" sortDescending="${clientDsc}" align="left"/>
+					<column label="CUSIP/Symbol" width="100px"
+						sortAscending="${CUSIPAsc}" sortDescending="${CUSIPDsc}" />
+					<column label="Description" width="450px" />
+					<column label="Market Price" width="80px"
+						sortAscending="${marketPriceAsc}"
+						sortDescending="${marketPriceDsc}" align="right"/>
+					<column label="Quantity" width="80px"
+						sortAscending="${quantityAsc}" sortDescending="${quantityDsc}" align="right"/>
+					<column label="Pending Call" width="100px" />
+					<column label="Maturity Date" width="100px"
+						sortAscending="${maturityAsc}" sortDescending="${maturityDsc}" />
+					<column label="Coupon" width="80px"
+						sortAscending="${couponAsc}" sortDescending="${couponDsc}" align="right"/>
+					<column label="Rating" sortAscending="${ratingAsc}"
+						sortDescending="${ratingDsc}" />
+
+				</columns>
+				<template name="model">
+					<row>
+						<a
+							onClick='home.src="/fixedIncome/Max/fixedIncome_client.zul"'>
+							<label value="${each.clientName}" />
+						</a>
+						<a
+							onClick='home.src="/fixedIncome/Max/fixedIncome_bonds.zul"'>
+							<label value="${each.CUSIP}" />
+						</a>
+						<label value="${each.description}" />
+						<label value="${each.marketPrice}" />
+						<label value="${each.quantity}" />
+						<label value="${each.pendingCall}" />
+						<label value="${each.maturity}" />
+						<label value="${each.coupon}" />
+						<a
+							onClick='home.src="/fixedIncome/Max/fixedIncome_bondDetail.zul"'>
+							<label value="${each.rating}" />
+						</a>
+					</row>
+				</template>
+				<foot>
+					<footer span="9" class="footer_right" id="footer" />
+				</foot>
+			</grid>
+		</div>
+	</div>
+</zk>

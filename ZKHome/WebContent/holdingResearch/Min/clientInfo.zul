@@ -1,0 +1,112 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<panel border="normal" width="100%">
+		<zscript><![CDATA[
+	String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+	if (loginName == null || loginName.equals("")) {
+		Executions.sendRedirect("../../welcome.zul");
+	}
+]]></zscript>
+
+		<panelchildren>
+			<hbox>
+				<borderlayout width="350px" height="200px">
+					<west border="0" title="Client Information"
+						size="350px">
+						<div align="center" style="margin-top: 20px">
+							<vlayout>
+								<hlayout style="margin-bottom: 20px;">
+									<image src="/images/carey.gif" />
+									<menupopup id="editPopup">
+										<menuitem label="Message" />
+										<menuseparator />
+										<menuitem label="Profile" />
+										<menuitem label="Mail to" />
+										<menuseparator />
+										<menu label="Group">
+											<menupopup>
+												<menu
+													label="Add to...">
+													<menupopup>
+														<menuitem
+															label="Member" autocheck="true" checkmark="true"
+															checked="true" />
+														<menuitem
+															label="Managers" autocheck="true" checkmark="true" />
+														<menuitem
+															label="Guest" autocheck="true" checkmark="true" />
+														<menuitem
+															label="Customers" autocheck="true" checkmark="true" />
+													</menupopup>
+												</menu>
+												<menu
+													label="Move to...">
+													<menupopup>
+														<menuitem
+															label="Member" autocheck="true" checkmark="true" />
+														<menuitem
+															label="Managers" autocheck="true" checkmark="true" />
+														<menuitem
+															label="Guest" autocheck="true" checkmark="true" />
+														<menuitem
+															label="Customers" autocheck="true" checkmark="true" />
+													</menupopup>
+												</menu>
+											</menupopup>
+										</menu>
+										<menuitem label="Block" />
+										<menuitem
+											label="Remove contant" />
+									</menupopup>
+									<vlayout style="margin: 20px">
+										<label style="font-weight:bold"
+											value="Name:Michael" />
+										<label style="font-weight:bold"
+											value="Age: 55" />
+										<label style="font-weight:bold"
+											value="Position: CEO" />
+										<label style="font-weight:bold"
+											value="Company: Future Inc.">
+										</label>
+									</vlayout>
+								</hlayout>
+							</vlayout>
+						</div>
+					</west>
+					<center border="0"></center>
+				</borderlayout>
+				<splitter id="s2" collapse="before" />
+				<div sclass="clientChart">
+					<hbox>
+						<vlayout apply="org.zkoss.bind.BindComposer"
+							viewModel="@id('vm') @init('chartUtil.StockChart')">
+							<chart id="chart"
+								title="Holdings Chart for Micheal" width="520" height="350"
+								paneColor="#FFFFFF" type="line" yAxis="Amount"
+								model="@bind(vm.model)" engine="@bind(vm.engine)" />
+						</vlayout>
+						<div sclass="optionClientChart">
+							<vbox>
+								<checkbox id="equities"
+									style="font-weight:bold" label="Equities"
+									onCheck="doChecked()" />
+								<checkbox id="mutualFund"
+									style="font-weight:bold" label="Mutual Funds"
+									onCheck="doChecked()" />
+								<checkbox id="fixedIncome"
+									style="font-weight:bold" label="Fixed Income"
+									onCheck="doChecked()" />
+								<checkbox id="closedEnd"
+									style="font-weight:bold" label="Closed-End Funds"
+									onCheck="doChecked()" />
+								<checkbox id="uit" label="UITs"
+									style="font-weight:bold" onCheck="doChecked()" />
+							</vbox>
+						</div>
+					</hbox>
+				</div>
+			</hbox>
+		</panelchildren>
+	</panel>
+
+</zk>

@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/267/ZKHome/src/view_model
+END
+calEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/26/ZKHome/src/view_model/calEvent.java
+END
+ClientInfoViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3/ZKHome/src/view_model/ClientInfoViewModel.java
+END
+FixedIncomeViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/ZKHome/src/view_model/FixedIncomeViewModel.java
+END
+HoldingResearchHomeViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/144/ZKHome/src/view_model/HoldingResearchHomeViewModel.java
+END
+ContactViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/77/ZKHome/src/view_model/ContactViewModel.java
+END
+ClientFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3/ZKHome/src/view_model/ClientFilter.java
+END
+IncomeFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3/ZKHome/src/view_model/IncomeFilter.java
+END
+StockGridRowRenderer.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/260/ZKHome/src/view_model/StockGridRowRenderer.java
+END
+MyProductionViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/132/ZKHome/src/view_model/MyProductionViewModel.java
+END
+RjNewsModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/267/ZKHome/src/view_model/RjNewsModel.java
+END
+StockQuotesWindow.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/164/ZKHome/src/view_model/StockQuotesWindow.java
+END
+ExpertsViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/3/ZKHome/src/view_model/ExpertsViewModel.java
+END
+HoldingFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3/ZKHome/src/view_model/HoldingFilter.java
+END
+CalModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/254/ZKHome/src/view_model/CalModel.java
+END
+FilterViewModelClient.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/187/ZKHome/src/view_model/FilterViewModelClient.java
+END
+FilterViewModelHolding.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/210/ZKHome/src/view_model/FilterViewModelHolding.java
+END
+MarketNewsViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/38/ZKHome/src/view_model/MarketNewsViewModel.java
+END
+HoldingInfoViewModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/ZKHome/src/view_model/HoldingInfoViewModel.java
+END
+DashWidPrev.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/217/ZKHome/src/view_model/DashWidPrev.java
+END

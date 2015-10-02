@@ -1,0 +1,29 @@
+
+
+<div>
+<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	<tabbox style="min-width: 1000px">
+		<tabs>
+			<tab label="Cash Flow" />
+			<tab label="Cash Available" />
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+				<include src="/cashManagement/max/cashflow.zul" />
+			</tabpanel>
+			<tabpanel>
+				<include src="/cashManagement/max/cashavail.zul" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+
+</div>
+
+

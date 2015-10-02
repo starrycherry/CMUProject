@@ -1,0 +1,184 @@
+<?page title="ALERTS" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	<zscript><![CDATA[String loginName = (String) Sessions.getCurrent().getAttribute("loginName");if(loginName == null || loginName.equals("")) {Executions.sendRedirect("../../welcome.zul");}]]></zscript>
+	<style src="/css/alerts.css" />
+	<zscript><![CDATA[
+                      String[] languages = {"advisor","Financial","branch manager","stock","market news","clients","top 10 clients","ranking",
+                              "Go","Groovy","Haskell","HTML","Java","JavaScript","Lisp","Python","Ruby",
+                              "Scala","Scheme"};
+    ]]></zscript>
+	<div width="693px" style="margin:0 auto" >
+	<bandbox id="bd" mold="default" autodrop="true" buttonVisible="true" style="float:right">
+		<bandpopup>
+			<listbox height="200px" width="350px" mold="paging" autopaging="true"
+                onSelect="bd.value=self.selectedItem.label; bd.close();">
+                <listhead>
+                    <listheader label="Programming Languages" />
+                </listhead>
+                <listitem label="${each}" forEach="${languages}" />
+            </listbox>
+		</bandpopup>
+    </bandbox>
+	<tabbox id="tb" height="auto">
+    <tabs id="tabs">
+        <tab id="summary" label="Summary" />
+        <tab id="stream" label="Stream" />
+    </tabs>
+   
+    <tabpanels width="680px" >
+    
+    	<!--Summary-->
+        <tabpanel width="680px">
+        	<listbox id="itemsForAttention" width="680px" >
+        		<listhead>
+        			<listheader label="Items for Attention" width="560px"/>
+        			<listheader label="Quantity" align="center" />
+        		</listhead>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Account Transfer Action Needed</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Cash &amp; Securities Due</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Delinquent Fees</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Documents Due</h:u></a></listcell>
+        			<listcell>4</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Insufficient Funds</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        	</listbox>
+        	<listbox id="notifications" width="680px" >
+        		<listhead>
+        			<listheader label="Notifications" width="560px"/>
+        			<listheader label="Quantity" align="center" />
+        		</listhead>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Annual Fees This Month</h:u></a></listcell>
+        			<listcell>15</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Mandatory Corporate Actions</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>POA Expiring</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Research Changes</h:u></a></listcell>
+        			<listcell>3</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Trade Reviews</h:u></a></listcell>
+        			<listcell>2</listcell>
+        		</listitem>
+        	</listbox>
+        	<listbox id="portfolioActivity" width="680px" >
+        		<listhead>
+        			<listheader label="Portofolio Activity Past 7 Days" width="560px" />
+        			<listheader label="Quantity" align="center" />
+        		</listhead>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>ACAT Out</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Bonds Maturing in 30 Days</h:u></a></listcell>
+        			<listcell>1</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Open Orders</h:u></a></listcell>
+        			<listcell>12</listcell>
+        		</listitem>
+        		<listitem height="28px">
+        			<listcell><a style="color:blue"><h:u>Pending Bond Calls</h:u></a></listcell>
+        			<listcell>3</listcell>
+        		</listitem>
+        	</listbox>
+        </tabpanel>
+        
+        <!--Stream-->
+        <tabpanel width="680px" >
+        	<vlayout>
+        		<radiogroup id="categorySelector">
+        			<hlayout>
+        				<radio selected="true" label="All"/><separator spacing="5px" />
+        				<radio label="Favorites"/><separator spacing="5px" />
+        				<radio label="Assigned"/><separator spacing="5px" />
+        				<radio label="Hidden"/><separator spacing="5px" />
+        			</hlayout>
+        		</radiogroup>
+        		<listbox id="streamList" apply="action.StreamController" width="677px" >
+					<listhead>
+						<listheader label="Subject" width="330px" />
+						<listheader label="Publish Time" sort="auto" width="90px" />
+						<listheader align="center" label="Favorite" width="80px" />
+						<listheader align="center" label="Assign" width="80px" />
+						<listheader align="center" label="Hide" width="80px" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell><h:div>${each.subject}</h:div></listcell>
+							<listcell label="${each.time}"></listcell>
+							<listcell><checkbox id="favorite${each.id}" label="Favorite" checked="${each.favorite}" onCheck='doFavorite(self.getId())'/></listcell>
+							<listcell><checkbox id="assign${each.id}" label="Assign" checked="${each.assign}" onCheck='doAssign(self.getId())'/></listcell>
+							<listcell><checkbox id="hidden${each.id}" label="Hide" checked="${each.hidden}" onCheck='doHidden(self.getId())' /></listcell>
+						</listitem>
+					</template>
+				</listbox>
+				<zscript><![CDATA[
+				    import action.StreamController;           
+				                  
+              		public void doFavorite(String a) {
+              			for(int i = 0; i < 9; i++) {
+              				if(a.equals("favorite" + Integer.toString(i))) {
+              					if(StreamController.streams.get(i).getFavorite() == true) {
+                  					StreamController.streams.get(i).setFavorite(false);
+                  				} else {
+                  					StreamController.streams.get(i).setFavorite(true);
+                  				}
+              				}
+              			}
+              		}
+              		
+              		public void doAssign(String a) {
+              			for(int i = 0; i < 9; i++) {
+              				if(a.equals("assign" + Integer.toString(i))) {
+              					if(StreamController.streams.get(i).getAssign() == true) {
+                  					StreamController.streams.get(i).setAssign(false);
+                  				} else {
+                  					StreamController.streams.get(i).setAssign(true);
+                  				}
+              				}
+              			}
+              		}
+              		
+              		public void doHidden(String a) {
+              			for(int i = 0; i < 9; i++) {
+              				if(a.equals("hidden" + Integer.toString(i))) {
+              					if(StreamController.streams.get(i).getHidden() == true) {
+                  					StreamController.streams.get(i).setHidden(false);
+                  				} else {
+                  					StreamController.streams.get(i).setHidden(true);
+                  				}
+              				}
+              			}
+              		}
+              		
+				]]></zscript>
+
+        	</vlayout>
+        	
+        </tabpanel>
+    </tabpanels>
+	</tabbox>
+	</div>
+</zk>

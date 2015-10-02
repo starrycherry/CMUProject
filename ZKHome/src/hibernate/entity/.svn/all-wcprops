@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity
+END
+CLIENT_ASSET_DETAILS.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/CLIENT_ASSET_DETAILS.java
+END
+RJ_USER_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/RJ_USER_MASTER.java
+END
+PRODUCTION_CATEGORY_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/PRODUCTION_CATEGORY_MASTER.java
+END
+MANAGER_FA_MAPPING.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/MANAGER_FA_MAPPING.java
+END
+ROLE_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/ROLE_MASTER.java
+END
+ASSET_TYPE_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/ASSET_TYPE_MASTER.java
+END
+CLIENT_FA_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/CLIENT_FA_MASTER.java
+END
+FA_PRODUCTION_DETAILS_MASTER.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/3/ZKHome/src/hibernate/entity/FA_PRODUCTION_DETAILS_MASTER.java
+END

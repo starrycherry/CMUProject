@@ -1,0 +1,163 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<style>.red{ color: red; } .green{ color: green; }</style>
+	<zscript><![CDATA[
+
+String loginName = (String) Sessions.getCurrent().getAttribute("loginName");
+
+if(loginName == null || loginName.equals("")) {
+	Executions.sendRedirect("../../welcome.zul");
+}
+]]></zscript>
+	
+	<zscript><![CDATA[
+	import java.util.Comparator;
+	import comparators.CashComparator;
+	Comparator relationAsc = new CashComparator(true, 2);
+	Comparator relationDsc = new CashComparator(false, 2);
+	Comparator accNameAsc = new CashComparator(true, 3);
+	Comparator accNameDsc = new CashComparator(false, 3);
+	Comparator accNumberAsc = new CashComparator(true, 4);
+	Comparator accNumberDsc = new CashComparator(false, 4);
+	Comparator typeAsc = new CashComparator(true, 5);
+	Comparator typeDsc = new CashComparator(false, 5);
+	Comparator amountAsc = new CashComparator(true, 6);
+	Comparator amountDsc = new CashComparator(false, 6);
+	Comparator dateAsc = new CashComparator(true, 9);
+	Comparator dateDsc = new CashComparator(false, 9);
+]]></zscript>
+	<div align="center">
+		<borderlayout height="430px">
+			<north border="none" style="padding: 2px 5px 5px 5px">
+				<hlayout width="720px">
+					Cash flow amount is bigger than
+					<doublespinner id="sGreater" value="0.00" hflex="1"
+						step="100.00" constraint="no empty,no negative" format="$,##0.00"
+						mold="rounded" />
+						&#160;
+						&#160;
+						&#160;
+					<combobox id="dateSelector" value="Yesterday"
+						autodrop="true" width="150px" mold="rounded" readonly="true">
+						<comboitem id="yesterday" label="Yesterday" />
+						<comboitem id="last7" label="Last 7 days" />
+						<comboitem id="last30" label="Last 30 days" />
+						<comboitem id="last90" label="Last 90 days" />
+						<comboitem id="YTD" label="Year To Date" />
+					</combobox>
+					&#160;
+					&#160;
+					&#160;
+					From
+					<datebox id="dateFrom" cols="12" hflex="1"
+						mold="rounded" format="MM/dd/yyyy" constraint="no empty" />
+					To
+					<datebox id="dateTo" cols="12" hflex="1"
+						mold="rounded" format="MM/dd/yyyy" constraint="no empty" />
+				</hlayout>
+			</north>
+
+			<west border="none"
+				style="width: 100px; padding: 10px 5px 5px 5px">
+				<zscript><![CDATA[
+	void doChecked(String s) {
+		if (s.equals("all") && all.isChecked()) {
+			in.setChecked(true);
+			out.setChecked(true);
+			buys.setChecked(true);
+			deposits.setChecked(true);
+			dividends.setChecked(true);
+			interest.setChecked(true);
+			sells.setChecked(true);
+			withdrawals.setChecked(true);
+		}
+		if (s.equals("all") && !all.isChecked()) {
+			in.setChecked(false);
+			out.setChecked(false);
+			buys.setChecked(false);
+			deposits.setChecked(false);
+			dividends.setChecked(false);
+			interest.setChecked(false);
+			sells.setChecked(false);
+			withdrawals.setChecked(false);
+		} else if (!s.equals("all") && all.isChecked()) {
+			all.setChecked(false);
+		}
+
+	}
+]]></zscript>
+				<vbox>
+					<checkbox id="all" label="All Activities"
+						checked="true" onCheck='doChecked("all")' />
+					<checkbox id="in" label="ACATS In" checked="true"
+						onCheck='doChecked("in")' />
+					<checkbox id="out" label="ACATS Out" checked="true"
+						onCheck='doChecked("out")' />
+					<checkbox id="buys" label="Buys" checked="true"
+						onCheck='doChecked("buys")' />
+					<checkbox id="deposits" label="Deposits"
+						checked="true" onCheck='doChecked("deposits")' />
+					<checkbox id="dividends" label="Dividends"
+						checked="true" onCheck='doChecked("devidends")' />
+					<checkbox id="interest" label="Interest"
+						checked="true" onCheck='doChecked("interest")' />
+					<checkbox id="sells" label="Sells" checked="true"
+						onCheck='doChecked("sells")' />
+					<checkbox id="withdrawals" label="Withdrawals"
+						checked="true" onCheck='doChecked("withdrawals")' />
+				</vbox>
+
+			</west>
+			<center border="none" style="padding: 5px 5px 5px 5px">
+				<grid vflex="1" width="auto" style="min-width:870px "
+					apply="action.CashFlowController">
+
+					<columns menupopup="auto">
+						<column label="Date" sort="auto" style="min-width:80px "
+							sortAscending="${dateAsc}" sortDescending="${dateDsc}"
+							align="left" />
+						<column label="Relationship" sort="auto" style="min-width:210px "
+							sortAscending="${relationAsc}" sortDescending="${relationDsc}"
+							align="left" />
+						<column label="Account Name" sort="auto" style="min-width:210px "
+							sortAscending="${accNameAsc}" sortDescending="${accNameDsc}"
+							align="left" />
+						<column label="Account Number" sort="auto" style="min-width:150px "
+							sortAscending="${accNumberAsc}" sortDescending="${accNumberDsc}"
+							align="left" />
+						<column label="Type" sort="auto"  style="min-width:100px "
+							sortAscending="${typeAsc}" sortDescending="${typeDsc}"
+							align="left" />
+						<column label="Amount&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; " sort="auto"  style="min-width:100px "
+							sortAscending="${amountAsc}" sortDescending="${amountDsc}"
+							 align="right" id="amount" />
+
+					</columns>
+					<template name="model" id="model">
+						<row>
+							<label value="${each.date}"></label>
+							<label value="${each.relationship}"></label>
+							<label value="${each.accountName}"></label>
+							<label value="${each.accountNumber}"></label>
+							<label value="${each.type}"></label>
+							<label value="${each.amount}" onCreate="changeColor(self.getValue())">
+							</label>
+
+						</row>
+
+					</template>
+					<zscript><![CDATA[
+	void changeColor(String value) {
+		if (Double.parseDouble((value.substring(1)).replaceAll(",","")) > 0) {
+			this.self.setSclass("green"); 
+		} else {
+			this.self.setSclass("red");
+		}
+
+	}
+]]></zscript>
+				</grid>
+			</center>
+		</borderlayout>
+	</div>
+</zk>

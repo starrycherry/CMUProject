@@ -1,0 +1,65 @@
+<?page title="SEARCH" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	<zscript><![CDATA[String loginName = (String) Sessions.getCurrent().getAttribute("loginName");if(loginName == null || loginName.equals("")) {Executions.sendRedirect("../../welcome.zul");}]]></zscript>
+<zscript><![CDATA[
+    import searchUtil.PrefixTree;
+    
+    boolean flag = false;
+    PrefixTree tree = new PrefixTree();
+]]></zscript>
+<div width="693px" style="margin:0 auto;padding-top:5px">
+
+	<hbox align="center">
+		<image id="voiceImg" src="/images/voice.png" />
+		<separator width="10px" />
+		Keyword:
+		<separator width="10px" />
+		<textbox id="keywordBox" width="250px">
+			<attribute name="onChanging"><![CDATA[
+			    String value = event.getValue();
+			    if(value.equals("")) {
+			    	cloud.setSrc("");
+					cloud.setVisible(false);
+					start.setVisible(true);
+					start.setSrc("tagCloud.html");
+			    } else {
+			    	List list = tree.vagueSearch(value);
+					Sessions.getCurrent().setAttribute("searchList", list);
+					start.setSrc("");
+					start.setVisible(false);
+					cloud.setVisible(true);
+					if(!flag) {
+						cloud.setSrc("tagCloud1.jsp");
+						flag = true;
+					} else {
+						cloud.setSrc("tagCloud2.jsp");
+						flag = false;
+					}
+			    }
+		    ]]></attribute>
+		</textbox>
+		<separator width="10px" />
+		<button mold="trendy" id="searchButton" label="Search" image="/images/search.png" />
+	</hbox>
+	<html>
+		<br />
+	</html>
+	<iframe id="start" width="630px" height="200px" src="tagCloud.html" />
+	<include id="cloud" width="630px" height="200px" src="" visible="false" />
+	<grid width="600px">
+		<rows>
+			<group label="Get Familiar" />
+				<row><label value="clients in california" /></row>
+				<row><label value="form 1212" /></row>
+				<row><label value="goog vs appl" /></row>
+				<row><label value="clients with available cash greater than $100000" /></row>
+				<row><label value="clients with a POA" /></row>
+			<group label="Try More" />
+				<row><label value="clients in CA that are over 65" /></row>
+				<row><label value="clientAgreement" /></row>
+				<row><label value="goog vs appl for the past year" /></row>
+				<row><label value="clients with available cash greater than $100000 that own appl and live in CA" /></row>
+		</rows>
+	</grid>
+</div>	
+</zk>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Created by ZK Studio
+-->
+
+<zk>
+	
+    <session-config>
+	    <session-timeout>7200</session-timeout>
+	    <timer-keep-alive>false</timer-keep-alive>
+	    <max-desktops-per-session>15</max-desktops-per-session>
+	    <max-requests-per-session>50</max-requests-per-session>
+	    <max-pushes-per-session>30</max-pushes-per-session>
+	</session-config>
+    
+	<!-- Hibernate SessionFactory lifecycle -->
+	<listener>
+		<description>Hibernate SessionFactory lifecycle</description>
+		<listener-class>org.zkoss.zkplus.hibernate.HibernateSessionFactoryListener</listener-class>
+	</listener>
+
+	<!-- Hibernate OpenSessionInView Pattern -->
+	<listener>
+		<description>Hibernate Open Session In View life-cycle</description>
+		<listener-class>org.zkoss.zkplus.hibernate.OpenSessionInViewListener</listener-class>
+	</listener>
+
+	<!-- Hibernate thread session context handler -->
+	<listener>
+		<description>Hibernate thread session context handler</description>
+		<listener-class>org.zkoss.zkplus.hibernate.HibernateSessionContextListener</listener-class>
+	</listener> 
+</zk>
+
+
